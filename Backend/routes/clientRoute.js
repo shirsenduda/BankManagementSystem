@@ -1,27 +1,30 @@
 import express from 'express';
-import { 
-    registerClient, 
-    loginClient, 
-    getUserProfile, 
+import upload from '../middleware/multer.js'; // Your multer config
+import { authenticateToken, loginLimiter, registerLimiter } from '../middleware/clientAuth.js';
+import {
+    registerClient,
+    loginClient,
+    getUserProfile,
     updateUserProfile,
     uploadProfileImage,
     changePassword,
     logoutClient
 } from '../controllers/clientController.js';
-import { authenticateToken, loginLimiter, registerLimiter } from '../middleware/clientAuth.js';
-import upload from '../middleware/multer.js';
 
-const clientRouter = express.Router();
+const router = express.Router();
 
 // Public routes
-clientRouter.post('/register', registerLimiter, registerClient);
-clientRouter.post('/login', loginLimiter, loginClient);
+router.post('/register', registerLimiter, registerClient);
+router.post('/login', loginLimiter, loginClient);
 
 // Protected routes
-clientRouter.get('/profile', authenticateToken, getUserProfile);
-clientRouter.put('/profile', authenticateToken, updateUserProfile);
-clientRouter.post('/upload-image', authenticateToken, upload.single('image'), uploadProfileImage);
-clientRouter.put('/change-password', authenticateToken, changePassword);
-clientRouter.post('/logout', authenticateToken, logoutClient);
+router.get('/profile', authenticateToken, getUserProfile);
+router.put('/profile', authenticateToken, updateUserProfile);
 
-export default clientRouter;
+// Image upload route with multer middleware
+router.post('/upload-image', authenticateToken, upload.single('image'), uploadProfileImage);
+
+router.put('/change-password', authenticateToken, changePassword);
+router.post('/logout', authenticateToken, logoutClient);
+
+export default router;

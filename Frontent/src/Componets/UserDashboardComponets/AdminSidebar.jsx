@@ -35,105 +35,21 @@ const AdminSidebar = () => {
     }));
   };
 
+  // Fixed sidebar navigation structure
   const sidebarItems = [
     {
-      title: 'Overview',
+      title: 'Dashboard',
       icon: LayoutDashboard,
       path: '/admin',
       exact: true,
-      badge: { text: 'Live', color: 'bg-green-500' }
     },
     {
-      title: 'Quick Actions',
-      icon: Zap,
-      isSection: true,
-      key: 'quick',
-      children: [
-        { title: 'Pending Approvals', path: '/admin/approvals', icon: Clock, badge: { text: '3', color: 'bg-orange-500' } },
-        { title: 'Security Alerts', path: '/admin/alerts', icon: AlertTriangle, badge: { text: '!', color: 'bg-red-500' } },
-        { title: 'System Health', path: '/admin/health', icon: CheckCircle, badge: { text: '✓', color: 'bg-green-500' } }
-      ]
-    },
-    {
-      title: 'User Management',
+      title: 'Profile',
       icon: Users,
-      isSection: true,
-      key: 'users',
-      children: [
-        { title: 'All Users', path: '/admin/users', icon: Users, count: '2.1k' },
-        { title: 'User Verification', path: '/admin/users/verification', icon: UserCheck, badge: { text: '12', color: 'bg-blue-500' } },
-        { title: 'Blocked Users', path: '/admin/users/blocked', icon: Shield, count: '23' }
-      ]
+      path: '/admin/users',
+      exact: false,
     },
-    {
-      title: 'Account Management',
-      icon: CreditCard,
-      isSection: true,
-      key: 'accounts',
-      children: [
-        { title: 'All Accounts', path: '/admin/accounts', icon: CreditCard, count: '1.8k' },
-        { title: 'Account Verification', path: '/admin/accounts/verification', icon: UserCheck, badge: { text: '7', color: 'bg-blue-500' } },
-        { title: 'Closed Accounts', path: '/admin/accounts/closed', icon: Archive, count: '156' }
-      ]
-    },
-    {
-      title: 'Financial Operations',
-      icon: DollarSign,
-      isSection: true,
-      key: 'transactions',
-      children: [
-        { title: 'All Transactions', path: '/admin/transactions', icon: Activity, count: '15.2k' },
-        { title: 'Pending Review', path: '/admin/transactions/pending', icon: Clock, badge: { text: '28', color: 'bg-orange-500' } },
-        { title: 'Failed Transactions', path: '/admin/transactions/failed', icon: AlertTriangle, count: '45' },
-        { title: 'Large Transfers', path: '/admin/transactions/large', icon: TrendingUp, badge: { text: '5', color: 'bg-purple-500' } }
-      ]
-    },
-    {
-      title: 'Analytics & Reports',
-      icon: BarChart3,
-      isSection: true,
-      key: 'analytics',
-      children: [
-        { title: 'Financial Reports', path: '/admin/reports/financial', icon: BarChart3 },
-        { title: 'User Analytics', path: '/admin/reports/users', icon: Users },
-        { title: 'Transaction Analytics', path: '/admin/reports/transactions', icon: Activity },
-        { title: 'Risk Assessment', path: '/admin/reports/risk', icon: Shield }
-      ]
-    },
-    {
-      title: 'Infrastructure',
-      icon: Building,
-      isSection: true,
-      key: 'infrastructure',
-      children: [
-        { title: 'Branch Network', path: '/admin/branches', icon: Building, count: '47' },
-        { title: 'ATM Management', path: '/admin/atms', icon: CreditCard, count: '234' },
-        { title: 'Service Status', path: '/admin/services', icon: Zap }
-      ]
-    },
-    {
-      title: 'Communications',
-      icon: Bell,
-      path: '/admin/notifications',
-      badge: { text: '8', color: 'bg-blue-500' }
-    },
-    {
-      title: 'Security & Compliance',
-      icon: Shield,
-      isSection: true,
-      key: 'security',
-      children: [
-        { title: 'Security Dashboard', path: '/admin/security', icon: Shield },
-        { title: 'Audit Logs', path: '/admin/security/logs', icon: FileText },
-        { title: 'Fraud Detection', path: '/admin/security/fraud', icon: AlertTriangle, badge: { text: '2', color: 'bg-red-500' } },
-        { title: 'Access Control', path: '/admin/security/access', icon: UserCheck }
-      ]
-    },
-    {
-      title: 'System Configuration',
-      icon: Settings,
-      path: '/admin/settings'
-    }
+    
   ];
 
   const renderMenuItem = (item, index) => {
@@ -253,6 +169,7 @@ const AdminSidebar = () => {
           background: #64748b;
         }
       `}</style>
+      
       {/* Header Section */}
       <div className="p-4 border-b border-slate-700/50">
         <h2 className="text-white font-semibold text-sm">Admin Panel</h2>
@@ -271,10 +188,10 @@ const AdminSidebar = () => {
 
       {/* Footer */}
       <div className="p-4 border-t border-slate-700/50">
-        {/* <div className="flex items-center space-x-2 text-xs text-gray-400">
+        <div className="flex items-center space-x-2 text-xs text-gray-400">
           <div className="w-2 h-2 bg-green-400 rounded-full"></div>
           <span>System Online</span>
-        </div> */}
+        </div>
       </div>
     </div>
   );

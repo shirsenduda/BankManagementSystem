@@ -285,24 +285,41 @@ const uploadProfileImage = async (req, res) => {
             });
         }
 
-        // Upload to Cloudinary
-        const result = await cloudinary.uploader.upload(req.file.path, {
+        console.log('File received:', req.file); // Debug log
+
+        // For memory storage, we need to upload the buffer directly to Cloudinary
+        const uploadOptions = {
             folder: 'bank_profiles',
             width: 300,
             height: 300,
             crop: 'fill',
-            quality: 'auto'
+            quality: 'auto',
+            resource_type: 'image'
+        };
+
+        // Upload buffer to Cloudinary using upload_stream
+        const uploadResult = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+                uploadOptions,
+                (error, result) => {
+                    if (error) {
+                        console.error('Cloudinary upload error:', error);
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                }
+            ).end(req.file.buffer);
         });
+
+        console.log('Cloudinary result:', uploadResult); // Debug log
 
         // Update client profile with new image URL
         const updatedClient = await clientModel.findByIdAndUpdate(
             req.userId,
-            { image: result.secure_url },
+            { image: uploadResult.secure_url },
             { new: true }
         ).select('-password');
-
-        // Delete local file
-        fs.unlinkSync(req.file.path);
 
         if (!updatedClient) {
             return res.status(404).json({
@@ -314,21 +331,16 @@ const uploadProfileImage = async (req, res) => {
         res.status(200).json({
             success: true,
             message: 'Profile image updated successfully',
-            imageUrl: result.secure_url,
+            imageUrl: uploadResult.secure_url,
             client: updatedClient
         });
 
     } catch (error) {
         console.error('Upload image error:', error);
         
-        // Delete local file in case of error
-        if (req.file && fs.existsSync(req.file.path)) {
-            fs.unlinkSync(req.file.path);
-        }
-
         res.status(500).json({
             success: false,
-            message: 'Server error while uploading image'
+            message: 'Server error while uploading image: ' + (error.message || 'Unknown error')
         });
     }
 };
