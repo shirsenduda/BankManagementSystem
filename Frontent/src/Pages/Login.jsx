@@ -74,7 +74,7 @@ const Login = () => {
         height="68" 
         rx="12" 
         ry="12" 
-        fill="#22C55E"
+        fill="#10B981"
         className="drop-shadow-lg"
       />
       <rect 
@@ -84,7 +84,7 @@ const Login = () => {
         height="68" 
         rx="12" 
         ry="12" 
-        fill="#34D399"
+        fill="#14B8A6"
         className="drop-shadow-md"
       />
       <rect 
@@ -104,7 +104,7 @@ const Login = () => {
         width="60" 
         height="4" 
         rx="2" 
-        fill="#16A34A"
+        fill="#059669"
         opacity="0.8"
       />
       <rect 
@@ -113,7 +113,7 @@ const Login = () => {
         width="60" 
         height="4" 
         rx="2" 
-        fill="#10B981"
+        fill="#0D9488"
         opacity="0.8"
       />
     </svg>
@@ -280,13 +280,13 @@ const Login = () => {
       {[1, 2, 3, 4].map((step) => (
         <div key={step} className="flex items-center">
           <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-            step <= currentStep ? 'bg-blue-600 text-white' : 'bg-gray-600 text-gray-300'
+            step <= currentStep ? 'bg-emerald-600 text-white' : 'bg-gray-600 text-gray-300'
           }`}>
             {step}
           </div>
           {step < 4 && (
             <div className={`w-12 h-1 mx-2 ${
-              step < currentStep ? 'bg-blue-600' : 'bg-gray-600'
+              step < currentStep ? 'bg-emerald-600' : 'bg-gray-600'
             }`} />
           )}
         </div>
@@ -306,7 +306,7 @@ const Login = () => {
               name="firstName"
               value={signupData.firstName}
               onChange={handleSignupChange}
-              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
                 validationErrors.firstName ? 'border-red-500/50' : 'border-white/20'
               }`}
               placeholder="First name"
@@ -324,7 +324,7 @@ const Login = () => {
               name="lastName"
               value={signupData.lastName}
               onChange={handleSignupChange}
-              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
                 validationErrors.lastName ? 'border-red-500/50' : 'border-white/20'
               }`}
               placeholder="Last name"
@@ -344,7 +344,7 @@ const Login = () => {
               name="email"
               value={signupData.email}
               onChange={handleSignupChange}
-              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
                 validationErrors.email ? 'border-red-500/50' : 'border-white/20'
               }`}
               placeholder="Enter your email"
@@ -362,7 +362,7 @@ const Login = () => {
               name="phone"
               value={signupData.phone}
               onChange={handleSignupChange}
-              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
                 validationErrors.phone ? 'border-red-500/50' : 'border-white/20'
               }`}
               placeholder="+1 (555) 123-4567"
@@ -380,7 +380,7 @@ const Login = () => {
             name="dateOfBirth"
             value={signupData.dateOfBirth}
             onChange={handleSignupChange}
-            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
               validationErrors.dateOfBirth ? 'border-red-500/50' : 'border-white/20'
             }`}
           />
@@ -393,7 +393,7 @@ const Login = () => {
             name="gender"
             value={signupData.gender}
             onChange={handleSignupChange}
-            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
               validationErrors.gender ? 'border-red-500/50' : 'border-white/20'
             }`}
           >
@@ -417,7 +417,7 @@ const Login = () => {
             name="addressLine1"
             value={signupData.addressLine1}
             onChange={handleSignupChange}
-            className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+            className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
               validationErrors.addressLine1 ? 'border-red-500/50' : 'border-white/20'
             }`}
             placeholder="Street address"
@@ -435,7 +435,7 @@ const Login = () => {
             name="addressLine2"
             value={signupData.addressLine2}
             onChange={handleSignupChange}
-            className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+            className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
             placeholder="Apartment, suite, etc."
           />
         </div>
@@ -449,7 +449,7 @@ const Login = () => {
             name="city"
             value={signupData.city}
             onChange={handleSignupChange}
-            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
               validationErrors.city ? 'border-red-500/50' : 'border-white/20'
             }`}
             placeholder="City"
@@ -464,7 +464,7 @@ const Login = () => {
             name="state"
             value={signupData.state}
             onChange={handleSignupChange}
-            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
               validationErrors.state ? 'border-red-500/50' : 'border-white/20'
             }`}
             placeholder="State"
@@ -479,7 +479,7 @@ const Login = () => {
             name="postalCode"
             value={signupData.postalCode}
             onChange={handleSignupChange}
-            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
               validationErrors.postalCode ? 'border-red-500/50' : 'border-white/20'
             }`}
             placeholder="ZIP/Postal"
@@ -497,7 +497,7 @@ const Login = () => {
               name="idType"
               value={signupData.idType}
               onChange={handleSignupChange}
-              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
                 validationErrors.idType ? 'border-red-500/50' : 'border-white/20'
               }`}
             >
@@ -518,7 +518,7 @@ const Login = () => {
               name="idNumber"
               value={signupData.idNumber}
               onChange={handleSignupChange}
-              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
                 validationErrors.idNumber ? 'border-red-500/50' : 'border-white/20'
               }`}
               placeholder="Enter ID number"
@@ -542,7 +542,7 @@ const Login = () => {
               name="occupation"
               value={signupData.occupation}
               onChange={handleSignupChange}
-              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
                 validationErrors.occupation ? 'border-red-500/50' : 'border-white/20'
               }`}
               placeholder="Your occupation"
@@ -560,7 +560,7 @@ const Login = () => {
               name="monthlyIncome"
               value={signupData.monthlyIncome}
               onChange={handleSignupChange}
-              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
                 validationErrors.monthlyIncome ? 'border-red-500/50' : 'border-white/20'
               }`}
               placeholder="5000"
@@ -577,7 +577,7 @@ const Login = () => {
             name="accountType"
             value={signupData.accountType}
             onChange={handleSignupChange}
-            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
               validationErrors.accountType ? 'border-red-500/50' : 'border-white/20'
             }`}
           >
@@ -597,7 +597,7 @@ const Login = () => {
               name="initialDeposit"
               value={signupData.initialDeposit}
               onChange={handleSignupChange}
-              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
                 validationErrors.initialDeposit ? 'border-red-500/50' : 'border-white/20'
               }`}
               placeholder="Minimum $100"
@@ -622,7 +622,7 @@ const Login = () => {
               name="nomineeName"
               value={signupData.nomineeName}
               onChange={handleSignupChange}
-              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
                 validationErrors.nomineeName ? 'border-red-500/50' : 'border-white/20'
               }`}
               placeholder="Nominee full name"
@@ -638,7 +638,7 @@ const Login = () => {
             name="nomineeRelation"
             value={signupData.nomineeRelation}
             onChange={handleSignupChange}
-            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
               validationErrors.nomineeRelation ? 'border-red-500/50' : 'border-white/20'
             }`}
             placeholder="e.g., Spouse, Parent, Child"
@@ -656,7 +656,7 @@ const Login = () => {
             name="nomineePhone"
             value={signupData.nomineePhone}
             onChange={handleSignupChange}
-            className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+            className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
               validationErrors.nomineePhone ? 'border-red-500/50' : 'border-white/20'
             }`}
             placeholder="Nominee phone number"
@@ -674,7 +674,7 @@ const Login = () => {
             name="password"
             value={signupData.password}
             onChange={handleSignupChange}
-            className={`w-full pl-12 pr-12 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+            className={`w-full pl-12 pr-12 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
               validationErrors.password ? 'border-red-500/50' : 'border-white/20'
             }`}
             placeholder="Create a password"
@@ -699,7 +699,7 @@ const Login = () => {
             name="confirmPassword"
             value={signupData.confirmPassword}
             onChange={handleSignupChange}
-            className={`w-full pl-12 pr-12 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
+            className={`w-full pl-12 pr-12 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
               validationErrors.confirmPassword ? 'border-red-500/50' : 'border-white/20'
             }`}
             placeholder="Confirm your password"
@@ -721,17 +721,17 @@ const Login = () => {
           name="agreeToTerms"
           checked={signupData.agreeToTerms}
           onChange={handleSignupChange}
-          className={`w-4 h-4 text-blue-600 bg-white/5 border rounded focus:ring-blue-500/50 focus:ring-2 mt-1 ${
+          className={`w-4 h-4 text-emerald-600 bg-white/5 border rounded focus:ring-emerald-500/50 focus:ring-2 mt-1 ${
             validationErrors.agreeToTerms ? 'border-red-500/50' : 'border-white/20'
           }`}
         />
         <label className="ml-3 text-sm text-gray-300">
           I agree to the{' '}
-          <button type="button" className="text-blue-400 hover:text-blue-300 transition-colors duration-200">
+          <button type="button" className="text-emerald-400 hover:text-emerald-300 transition-colors duration-200">
             Terms of Service
           </button>{' '}
           and{' '}
-          <button type="button" className="text-blue-400 hover:text-blue-300 transition-colors duration-200">
+          <button type="button" className="text-emerald-400 hover:text-emerald-300 transition-colors duration-200">
             Privacy Policy
           </button>
         </label>
@@ -741,15 +741,15 @@ const Login = () => {
   );
 
   return (
-    <div className="min-h-screen py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900/30 to-slate-900">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/20 via-transparent to-transparent"></div>
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+    <div className="min-h-screen py-24 relative overflow-hidden bg-slate-900">
+      {/* Enhanced Background Effects - Matching About Component */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-600/10 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,.02)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
       
-      {/* Decorative Elements */}
-      <div className="absolute top-20 left-20 w-2 h-2 bg-blue-400/60 rotate-45 animate-pulse"></div>
-      <div className="absolute bottom-20 right-20 w-3 h-3 bg-indigo-400/60 rotate-45 animate-pulse delay-300"></div>
-      <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-purple-400/60 rotate-45 animate-pulse delay-700"></div>
+      {/* Refined Decorative Elements - Matching About Component */}
+      <div className="absolute top-12 left-12 w-3 h-3 bg-emerald-400/80 rotate-45 animate-pulse shadow-lg shadow-emerald-400/20"></div>
+      <div className="absolute bottom-24 right-24 w-2 h-2 bg-emerald-500/80 rotate-45 animate-pulse delay-300 shadow-lg shadow-emerald-500/20"></div>
+      <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-emerald-300/60 rotate-45 animate-pulse delay-700"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -763,7 +763,7 @@ const Login = () => {
               
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
                 Welcome to Your
-                <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent"> Financial Future</span>
+                <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 bg-clip-text text-transparent"> Financial Future</span>
               </h1>
               
               <p className="text-xl text-gray-300 font-light leading-relaxed mb-8">
@@ -776,7 +776,7 @@ const Login = () => {
                   const IconComponent = feature.icon;
                   return (
                     <div key={index} className="flex items-center gap-2 text-gray-300">
-                      <IconComponent size={20} className="text-blue-400" />
+                      <IconComponent size={20} className="text-emerald-400" />
                       <span className="text-sm font-medium">{feature.text}</span>
                     </div>
                   );
@@ -787,19 +787,19 @@ const Login = () => {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 py-8 border-t border-slate-700/50">
               <div className="text-center">
-                <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent mb-1">
+                <div className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-1">
                   2M+
                 </div>
                 <div className="text-gray-400 text-sm">Happy Customers</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-1">
+                <div className="text-2xl font-bold bg-gradient-to-r from-teal-400 to-emerald-500 bg-clip-text text-transparent mb-1">
                   99.9%
                 </div>
                 <div className="text-gray-400 text-sm">Uptime</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">
+                <div className="text-2xl font-bold bg-gradient-to-r from-emerald-500 to-green-500 bg-clip-text text-transparent mb-1">
                   25+
                 </div>
                 <div className="text-gray-400 text-sm">Years Experience</div>
@@ -820,7 +820,7 @@ const Login = () => {
                   }}
                   className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
                     isLogin
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
+                      ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
                       : 'text-gray-400 hover:text-white'
                   }`}
                 >
@@ -834,7 +834,7 @@ const Login = () => {
                   }}
                   className={`flex-1 py-3 px-4 rounded-lg font-semibold transition-all duration-300 ${
                     !isLogin
-                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg'
+                      ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
                       : 'text-gray-400 hover:text-white'
                   }`}
                 >
@@ -867,8 +867,8 @@ const Login = () => {
                           onChange={handleLoginChange}
                           onFocus={() => setFocusedField('login-email')}
                           onBlur={() => setFocusedField(null)}
-                          className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
-                            focusedField === 'login-email' ? 'border-blue-500/50 bg-white/10' : validationErrors.email ? 'border-red-500/50' : 'border-white/20'
+                          className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
+                            focusedField === 'login-email' ? 'border-emerald-500/50 bg-white/10' : validationErrors.email ? 'border-red-500/50' : 'border-white/20'
                           }`}
                           placeholder="Enter your email"
                           required
@@ -890,8 +890,8 @@ const Login = () => {
                           onChange={handleLoginChange}
                           onFocus={() => setFocusedField('login-password')}
                           onBlur={() => setFocusedField(null)}
-                          className={`w-full pl-12 pr-12 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
-                            focusedField === 'login-password' ? 'border-blue-500/50 bg-white/10' : validationErrors.password ? 'border-red-500/50' : 'border-white/20'
+                          className={`w-full pl-12 pr-12 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
+                            focusedField === 'login-password' ? 'border-emerald-500/50 bg-white/10' : validationErrors.password ? 'border-red-500/50' : 'border-white/20'
                           }`}
                           placeholder="Enter your password"
                           required
@@ -914,11 +914,11 @@ const Login = () => {
                     <label className="flex items-center">
                       <input
                         type="checkbox"
-                        className="w-4 h-4 text-blue-600 bg-white/5 border-white/20 rounded focus:ring-blue-500/50 focus:ring-2"
+                        className="w-4 h-4 text-emerald-600 bg-white/5 border-white/20 rounded focus:ring-emerald-500/50 focus:ring-2"
                       />
                       <span className="ml-2 text-sm text-gray-300">Remember me</span>
                     </label>
-                    <button type="button" className="text-sm text-blue-400 hover:text-blue-300 transition-colors duration-200">
+                    <button type="button" className="text-sm text-emerald-400 hover:text-emerald-300 transition-colors duration-200">
                       Forgot password?
                     </button>
                   </div>
@@ -926,7 +926,7 @@ const Login = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="group w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-blue-500/25 flex items-center justify-center gap-3"
+                    className="group w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center gap-3"
                   >
                     {loading ? 'Signing In...' : 'Sign In'}
                     {!loading && <ArrowRight
@@ -973,7 +973,7 @@ const Login = () => {
                       <button
                         type="submit"
                         disabled={loading}
-                        className="group flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-blue-500/25 flex items-center justify-center gap-3"
+                        className="group flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center gap-3"
                       >
                         {loading ? 'Processing...' : currentStep === 4 ? 'Create Account' : 'Next'}
                         {!loading && <ArrowRight

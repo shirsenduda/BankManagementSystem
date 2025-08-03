@@ -15,23 +15,22 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+    <section className="min-h-screen flex items-center relative overflow-hidden bg-slate-900">
       {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-600/20 via-transparent to-transparent"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-indigo-600/20 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-600/15 via-transparent to-transparent"></div>
 
       {/* Professional Grid Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,.03)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,.03)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,.03)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
 
       {/* Refined Decorative Elements */}
-      <div className="absolute top-20 right-20 w-3 h-3 bg-blue-400/60 rotate-45 animate-pulse"></div>
-      <div className="absolute bottom-40 left-10 w-2 h-2 bg-indigo-400/60 rotate-45 animate-pulse delay-300"></div>
-      <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-blue-300/60 rotate-45 animate-pulse delay-700"></div>
+      <div className="absolute top-20 right-20 w-3 h-3 bg-emerald-400/60 rotate-45 animate-pulse"></div>
+      <div className="absolute bottom-40 left-10 w-2 h-2 bg-teal-400/60 rotate-45 animate-pulse delay-300"></div>
+      <div className="absolute top-1/2 right-1/3 w-1.5 h-1.5 bg-emerald-300/60 rotate-45 animate-pulse delay-700"></div>
 
       {/* Enhanced Curved Lines */}
       <div className="absolute inset-0 overflow-hidden">
         <svg
-          className="absolute bottom-0 right-0 w-1/2 h-1/2 text-blue-500/10"
+          className="absolute bottom-0 right-0 w-1/2 h-1/2 text-emerald-500/10"
           viewBox="0 0 400 400"
         >
           <path
@@ -61,14 +60,14 @@ const HeroSection = () => {
           <div className="space-y-10">
             <div className="space-y-8">
               {/* Trust Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium backdrop-blur-sm mt-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-sm font-medium backdrop-blur-sm mt-4">
                 <Shield size={16} />
                 <span>Bank-Grade Security & Trust</span>
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white">
                 Discover the Perfect{" "}
-                <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="text-emerald-400">
                   Bank Card
                 </span>{" "}
                 for You
@@ -81,7 +80,7 @@ const HeroSection = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-blue-500/25 flex items-center justify-center gap-3">
+                <button className="group bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center gap-3">
                   Get Started Today
                   <ArrowRight
                     size={20}
@@ -102,7 +101,7 @@ const HeroSection = () => {
                     key={index}
                     src={avatar}
                     alt={`Customer ${index + 1}`}
-                    className="w-12 h-12 rounded-full border-3 border-slate-800 object-cover ring-2 ring-blue-500/20"
+                    className="w-12 h-12 rounded-full border-3 border-slate-800 object-cover ring-2 ring-emerald-500/20"
                   />
                 ))}
               </div>
@@ -125,11 +124,11 @@ const HeroSection = () => {
           <div className="relative flex justify-center lg:justify-end">
             <div className="relative">
               {/* Main Credit Card with Enhanced Design */}
-              <div className="w-80 h-48 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 rounded-2xl p-6 relative overflow-hidden shadow-2xl border border-slate-600/50 hover:scale-105 transition-transform duration-500">
+              <div className="w-80 h-48 bg-slate-800 rounded-2xl p-6 relative overflow-hidden shadow-2xl border border-slate-600/50 hover:scale-105 transition-transform duration-500">
                 {/* Premium Card Pattern */}
                 <div className="absolute inset-0">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-500/20 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
-                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-indigo-500/20 to-transparent rounded-full translate-y-12 -translate-x-12"></div>
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full -translate-y-16 translate-x-16"></div>
+                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-teal-500/10 rounded-full translate-y-12 -translate-x-12"></div>
                 </div>
 
                 {/* Card Content */}
@@ -139,7 +138,7 @@ const HeroSection = () => {
                       <div className="w-6 h-4 bg-yellow-600/80 rounded-sm"></div>
                     </div>
                     <div className="text-right text-sm font-medium tracking-wider">
-                      <div className="text-blue-300">PLATINUM</div>
+                      <div className="text-emerald-300">PLATINUM</div>
                     </div>
                   </div>
 
@@ -164,8 +163,8 @@ const HeroSection = () => {
                         <div className="font-semibold">09/28</div>
                       </div>
                       <div className="flex gap-1">
-                        <div className="w-7 h-5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded"></div>
-                        <div className="w-7 h-5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded"></div>
+                        <div className="w-7 h-5 bg-emerald-500 rounded"></div>
+                        <div className="w-7 h-5 bg-teal-500 rounded"></div>
                       </div>
                     </div>
                   </div>
@@ -173,10 +172,10 @@ const HeroSection = () => {
               </div>
 
               {/* Enhanced Floating Elements */}
-              <div className="absolute -top-6 -right-6 w-12 h-12 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full animate-pulse shadow-lg flex items-center justify-center">
+              <div className="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500 rounded-full animate-pulse shadow-lg flex items-center justify-center">
                 <Shield size={20} className="text-white" />
               </div>
-              <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full animate-pulse delay-300 shadow-lg"></div>
+              <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-teal-500 rounded-full animate-pulse delay-300 shadow-lg"></div>
 
               {/* Additional Cards Behind */}
               <div className="absolute top-2 left-2 w-80 h-48 bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl -z-10 opacity-60"></div>
@@ -197,10 +196,10 @@ const HeroSection = () => {
                 <div className="flex items-center justify-center mb-3">
                   <IconComponent
                     size={24}
-                    className="text-blue-400 group-hover:text-blue-300"
+                    className="text-emerald-400 group-hover:text-emerald-300"
                   />
                 </div>
-                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent mb-2">
+                <div className="text-3xl md:text-4xl font-bold text-emerald-400 mb-2">
                   {stat.value}
                 </div>
                 <div className="text-gray-400 text-sm font-medium tracking-wide">

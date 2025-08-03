@@ -1,7 +1,4 @@
 import { ArrowRight, Star, Shield, Award, Users, CheckCircle, Globe, TrendingUp } from "lucide-react";
-import AboutDescription from '../../Componets/UserFrontentComponets/AboutDescription';
-import FeatureCard from '../../Componets/UserFrontentComponets/FeatureCard';
-import StatsCard from '../../Componets/UserFrontentComponets/StatsCard';
 
 const About = () => {
   const stats = [
@@ -50,26 +47,27 @@ const About = () => {
   ];
 
   return (
-    <section className="min-h-screen py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900/30 to-slate-900">
-      {/* Background Effects - Matching OfferSection */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/20 via-transparent to-transparent"></div>
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+    <section className="min-h-screen py-24 relative overflow-hidden bg-slate-900">
+      {/* Enhanced Background Effects - Matching PersonalizedCardSection */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-600/10 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,.02)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
       
-      {/* Decorative Elements - Matching OfferSection */}
-      <div className="absolute top-20 left-20 w-2 h-2 bg-blue-400/60 rotate-45 animate-pulse"></div>
-      <div className="absolute bottom-20 right-20 w-3 h-3 bg-indigo-400/60 rotate-45 animate-pulse delay-300"></div>
+      {/* Refined Decorative Elements - Matching PersonalizedCardSection */}
+      <div className="absolute top-12 left-12 w-3 h-3 bg-emerald-400/80 rotate-45 animate-pulse shadow-lg shadow-emerald-400/20"></div>
+      <div className="absolute bottom-24 right-24 w-2 h-2 bg-emerald-500/80 rotate-45 animate-pulse delay-300 shadow-lg shadow-emerald-500/20"></div>
+      <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-emerald-300/60 rotate-45 animate-pulse delay-700"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         {/* Enhanced Header Section */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium backdrop-blur-sm mb-6">
-            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-sm font-medium backdrop-blur-sm mb-6">
+            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
             <span>About Our Bank</span>
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
             Why Choose 
-            <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent"> GreenBank?</span>
+            <span className="text-emerald-400"> FinanceHub?</span>
           </h2>
           
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8 font-light">
@@ -77,8 +75,10 @@ const About = () => {
             backed by cutting-edge technology and unparalleled customer service.
           </p>
           
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto rounded-full"></div>
         </div>
+        
+        {/* Stats Section */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
           {stats.map((stat, index) => {
             const IconComponent = stat.icon;
@@ -90,10 +90,10 @@ const About = () => {
                 <div className="flex items-center justify-center mb-3">
                   <IconComponent
                     size={24}
-                    className="text-blue-400 group-hover:text-blue-300"
+                    className="text-emerald-400 group-hover:text-emerald-300"
                   />
                 </div>
-                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent mb-2">
+                <div className="text-3xl md:text-4xl font-bold text-emerald-400 mb-2">
                   {stat.number}
                 </div>
                 <div className="text-gray-400 text-sm font-medium tracking-wide mb-1">
@@ -107,22 +107,20 @@ const About = () => {
           })}
         </div>
 
-        {/* Enhanced Stats Grid */}
-
         {/* Enhanced Features Section */}
         <div className="mb-20">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
               const colors = [
-                'from-blue-500 to-indigo-500',
-                'from-indigo-500 to-purple-500', 
-                'from-purple-500 to-pink-500'
+                'from-emerald-500 to-teal-500',
+                'from-teal-500 to-emerald-600', 
+                'from-emerald-600 to-green-500'
               ];
               return (
-                <div key={index} className="group relative bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:border-blue-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20">
+                <div key={index} className="group relative bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:border-emerald-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20">
                   {/* Background Gradient on Hover */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${colors[index]} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl`}></div>
+                  <div className="absolute inset-0 bg-emerald-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
                   
                   {/* Icon with Enhanced Design */}
                   <div className="relative mb-8">
@@ -131,12 +129,12 @@ const About = () => {
                     </div>
                     
                     {/* Floating particles */}
-                    <div className="absolute -top-2 -right-2 w-3 h-3 bg-blue-400/60 rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-indigo-400/60 rounded-full animate-pulse delay-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute -top-2 -right-2 w-3 h-3 bg-emerald-400/60 rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-teal-400/60 rounded-full animate-pulse delay-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-blue-300 transition-colors duration-300">
+                  <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-emerald-300 transition-colors duration-300">
                     {feature.title}
                   </h3>
                   
@@ -151,7 +149,7 @@ const About = () => {
                   </button>
 
                   {/* Enhanced Hover Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
                   
                   {/* Shimmer Effect */}
                   <div className="absolute inset-0 -top-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 transform -skew-x-12 group-hover:animate-shimmer rounded-2xl pointer-events-none"></div>
@@ -163,13 +161,13 @@ const About = () => {
 
         {/* Enhanced CTA Section */}
         <div className="text-center">
-          <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-10 md:p-16 overflow-hidden group hover:border-blue-500/20 transition-all duration-500">
+          <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-10 md:p-16 overflow-hidden group hover:border-emerald-500/20 transition-all duration-500">
             {/* CTA Background Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-indigo-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-0 bg-emerald-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             
             <div className="relative z-10">
               <div className="mb-6">
-                <div className="inline-flex items-center space-x-2 text-blue-400 mb-4">
+                <div className="inline-flex items-center space-x-2 text-emerald-400 mb-4">
                   <Star className="w-5 h-5" />
                   <span className="text-sm font-semibold tracking-wide uppercase">Get Started</span>
                   <Star className="w-5 h-5" />
@@ -181,12 +179,12 @@ const About = () => {
               </h3>
               
               <p className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light">
-                Join millions of satisfied customers and discover how GreenBank can transform your financial journey 
+                Join millions of satisfied customers and discover how FinanceHub can transform your financial journey 
                 with innovative solutions tailored to your needs.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <button className="group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-blue-500/25 flex items-center justify-center gap-3">
+                <button className="group bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center gap-3">
                   <span className="text-lg">Get Started Today</span>
                   <ArrowRight
                     size={20}

@@ -63,9 +63,9 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-emerald-600/15 via-transparent to-transparent"></div>
+    <footer className="bg-slate-800 relative overflow-hidden">
+      {/* Simplified Background Effects */}
+      <div className="absolute inset-0 bg-emerald-600/5"></div>
       <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
       
       {/* Decorative Elements */}
@@ -79,7 +79,7 @@ const Footer = () => {
             <div>
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
                 Stay Updated with{' '}
-                <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
+                <span className="text-emerald-400">
                   Financial Insights
                 </span>
               </h3>
@@ -96,7 +96,7 @@ const Footer = () => {
                     className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500/50 focus:bg-white/10 transition-all duration-300 backdrop-blur-sm"
                   />
                 </div>
-                <button className="group bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center gap-2 whitespace-nowrap">
+                <button className="group bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center gap-2 whitespace-nowrap">
                   Subscribe
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
@@ -114,7 +114,7 @@ const Footer = () => {
             {/* Brand Section */}
             <div className="lg:col-span-2 space-y-6">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center">
+                <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center">
                   <CreditCard className="w-6 h-6 text-white" />
                 </div>
                 <span className="text-2xl font-bold text-white">FinanceHub</span>
@@ -258,7 +258,7 @@ const Footer = () => {
             {/* Back to Top */}
             <button
               onClick={scrollToTop}
-              className="w-10 h-10 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 rounded-lg flex items-center justify-center text-white transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 group"
+              className="w-10 h-10 bg-emerald-600 hover:bg-emerald-700 rounded-lg flex items-center justify-center text-white transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 group"
               aria-label="Back to top"
             >
               <ChevronUp className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform duration-300" />

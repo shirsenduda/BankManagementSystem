@@ -18,28 +18,28 @@ const Contact = () => {
       title: 'Call Us',
       primary: '+1 (555) 123-4567',
       secondary: 'Mon-Fri 9am-6pm EST',
-      color: 'from-blue-500 to-indigo-500'
+      color: 'from-emerald-500 to-teal-500'
     },
     {
       icon: Mail,
       title: 'Email Us',
       primary: 'support@greenbank.com',
       secondary: 'We reply within 24 hours',
-      color: 'from-indigo-500 to-purple-500'
+      color: 'from-teal-500 to-emerald-600'
     },
     {
       icon: MapPin,
       title: 'Visit Us',
       primary: '123 Financial District',
       secondary: 'New York, NY 10004',
-      color: 'from-purple-500 to-pink-500'
+      color: 'from-emerald-600 to-green-500'
     },
     {
       icon: Clock,
       title: 'Business Hours',
       primary: 'Mon-Fri: 9am-6pm',
       secondary: 'Sat-Sun: 10am-4pm',
-      color: 'from-pink-500 to-red-500'
+      color: 'from-green-500 to-emerald-500'
     }
   ];
 
@@ -76,27 +76,27 @@ const Contact = () => {
   };
 
   return (
-    <section className="min-h-screen py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900/30 to-slate-900">
-      {/* Background Effects - Matching OfferSection */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-600/20 via-transparent to-transparent"></div>
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+    <section className="min-h-screen py-24 relative overflow-hidden bg-slate-900">
+      {/* Background Effects - Matching PersonalizedCardSection */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-600/10 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,.02)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
       
-      {/* Decorative Elements */}
-      <div className="absolute top-20 left-20 w-2 h-2 bg-blue-400/60 rotate-45 animate-pulse"></div>
-      <div className="absolute bottom-20 right-20 w-3 h-3 bg-indigo-400/60 rotate-45 animate-pulse delay-300"></div>
-      <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-purple-400/60 rotate-45 animate-pulse delay-700"></div>
+      {/* Decorative Elements - Matching emerald theme */}
+      <div className="absolute top-12 left-12 w-3 h-3 bg-emerald-400/80 rotate-45 animate-pulse shadow-lg shadow-emerald-400/20"></div>
+      <div className="absolute bottom-24 right-24 w-2 h-2 bg-emerald-500/80 rotate-45 animate-pulse delay-300 shadow-lg shadow-emerald-500/20"></div>
+      <div className="absolute top-1/3 right-1/4 w-1.5 h-1.5 bg-emerald-300/60 rotate-45 animate-pulse delay-700"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header Section */}
         <div className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium backdrop-blur-sm mb-6">
-            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-sm font-medium backdrop-blur-sm mb-6">
+            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
             <span>Get In Touch</span>
           </div>
           
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
             Contact{' '}
-            <span className="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="text-emerald-400">
               GreenBank
             </span>
           </h1>
@@ -105,7 +105,7 @@ const Contact = () => {
             Have questions or need assistance? Our dedicated team is here to help you with all your banking needs.
           </p>
           
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 mx-auto rounded-full"></div>
         </div>
 
         {/* Contact Info Cards */}
@@ -113,7 +113,7 @@ const Contact = () => {
           {contactInfo.map((info, index) => (
             <div
               key={index}
-              className="group relative bg-white/5 backdrop-blur-sm p-6 rounded-2xl border border-white/10 hover:border-blue-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20"
+              className="group relative bg-white/5 backdrop-blur-sm p-6 rounded-2xl border border-white/10 hover:border-emerald-500/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20"
             >
               {/* Background Gradient on Hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${info.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-2xl`}></div>
@@ -125,10 +125,10 @@ const Contact = () => {
                 </div>
                 
                 {/* Floating particles */}
-                <div className="absolute -top-1 -right-1 w-2 h-2 bg-blue-400/60 rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400/60 rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
 
-              <h3 className="text-lg font-bold mb-2 text-white group-hover:text-blue-300 transition-colors duration-300">
+              <h3 className="text-lg font-bold mb-2 text-white group-hover:text-emerald-300 transition-colors duration-300">
                 {info.title}
               </h3>
               
@@ -141,7 +141,7 @@ const Contact = () => {
               </p>
 
               {/* Enhanced Hover Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-teal-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
               
               {/* Shimmer Effect */}
               <div className="absolute inset-0 -top-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 transform -skew-x-12 group-hover:animate-shimmer rounded-2xl pointer-events-none"></div>
@@ -166,8 +166,8 @@ const Contact = () => {
                     onChange={handleInputChange}
                     onFocus={() => setFocusedField('name')}
                     onBlur={() => setFocusedField(null)}
-                    className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
-                      focusedField === 'name' ? 'border-blue-500/50 bg-white/10' : 'border-white/20'
+                    className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
+                      focusedField === 'name' ? 'border-emerald-500/50 bg-white/10' : 'border-white/20'
                     }`}
                     placeholder="John Doe"
                     required
@@ -183,8 +183,8 @@ const Contact = () => {
                     onChange={handleInputChange}
                     onFocus={() => setFocusedField('email')}
                     onBlur={() => setFocusedField(null)}
-                    className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
-                      focusedField === 'email' ? 'border-blue-500/50 bg-white/10' : 'border-white/20'
+                    className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
+                      focusedField === 'email' ? 'border-emerald-500/50 bg-white/10' : 'border-white/20'
                     }`}
                     placeholder="john@example.com"
                     required
@@ -202,8 +202,8 @@ const Contact = () => {
                     onChange={handleInputChange}
                     onFocus={() => setFocusedField('phone')}
                     onBlur={() => setFocusedField(null)}
-                    className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
-                      focusedField === 'phone' ? 'border-blue-500/50 bg-white/10' : 'border-white/20'
+                    className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
+                      focusedField === 'phone' ? 'border-emerald-500/50 bg-white/10' : 'border-white/20'
                     }`}
                     placeholder="+1 (555) 123-4567"
                   />
@@ -218,8 +218,8 @@ const Contact = () => {
                     onChange={handleInputChange}
                     onFocus={() => setFocusedField('subject')}
                     onBlur={() => setFocusedField(null)}
-                    className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 ${
-                      focusedField === 'subject' ? 'border-blue-500/50 bg-white/10' : 'border-white/20'
+                    className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
+                      focusedField === 'subject' ? 'border-emerald-500/50 bg-white/10' : 'border-white/20'
                     }`}
                     placeholder="How can we help?"
                     required
@@ -236,8 +236,8 @@ const Contact = () => {
                   onFocus={() => setFocusedField('message')}
                   onBlur={() => setFocusedField(null)}
                   rows={5}
-                  className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none ${
-                    focusedField === 'message' ? 'border-blue-500/50 bg-white/10' : 'border-white/20'
+                  className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 resize-none ${
+                    focusedField === 'message' ? 'border-emerald-500/50 bg-white/10' : 'border-white/20'
                   }`}
                   placeholder="Tell us more about your inquiry..."
                   required
@@ -246,7 +246,7 @@ const Contact = () => {
 
               <button
                 type="submit"
-                className="group w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-blue-500/25 flex items-center justify-center gap-3"
+                className="group w-full bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center gap-3"
               >
                 <Send size={20} />
                 Send Message
@@ -268,9 +268,9 @@ const Contact = () => {
                 {features.map((feature, index) => {
                   const IconComponent = feature.icon;
                   const colors = [
-                    'from-blue-500 to-indigo-500',
-                    'from-indigo-500 to-purple-500', 
-                    'from-purple-500 to-pink-500'
+                    'from-emerald-500 to-teal-500',
+                    'from-teal-500 to-emerald-600', 
+                    'from-emerald-600 to-green-500'
                   ];
                   
                   return (
@@ -309,7 +309,7 @@ const Contact = () => {
 
         {/* FAQ Section */}
         <div className="text-center">
-          <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-10 md:p-16 overflow-hidden group hover:border-blue-500/20 transition-all duration-500">
+          <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-10 md:p-16 overflow-hidden group hover:border-emerald-500/20 transition-all duration-500">
             <div className="relative z-10">
               <h3 className="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
                 Need Quick Answers?
@@ -320,7 +320,7 @@ const Contact = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <button className="group bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-blue-500/25 flex items-center justify-center gap-3">
+                <button className="group bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center gap-3">
                   Visit FAQ
                   <ArrowRight
                     size={20}

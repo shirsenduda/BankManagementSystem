@@ -2,9 +2,9 @@ import { ArrowRight, Search, Target, Award, TrendingUp } from 'lucide-react';
 
 const FindPerfectCardSection = () => {
   return (
-    <section className="py-24 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 relative overflow-hidden">
+    <section className="py-24 bg-slate-900 relative overflow-hidden">
       {/* Enhanced Background Effects */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-emerald-600/15 via-transparent to-transparent"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-600/10 via-transparent to-transparent"></div>
       <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
       
       {/* Enhanced Decorative Lines */}
@@ -60,7 +60,7 @@ const FindPerfectCardSection = () => {
                 </div>
 
                 {/* Green Card (Middle) - Enhanced */}
-                <div className="absolute top-4 left-4 w-80 h-48 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl p-6 relative overflow-hidden transform rotate-3 shadow-2xl border border-emerald-300/30 hover:rotate-2 transition-transform duration-500">
+                <div className="absolute top-4 left-4 w-80 h-48 bg-emerald-500 rounded-2xl p-6 relative overflow-hidden transform rotate-3 shadow-2xl border border-emerald-300/30 hover:rotate-2 transition-transform duration-500">
                   {/* Enhanced Pattern */}
                   <div className="absolute inset-0">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-white/15 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
@@ -94,10 +94,10 @@ const FindPerfectCardSection = () => {
                 </div>
 
                 {/* Light Green Card (Front) - Enhanced */}
-                <div className="absolute top-8 left-8 w-80 h-48 bg-gradient-to-br from-emerald-300 to-emerald-500 rounded-2xl p-6 relative overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500 ring-2 ring-emerald-400/20">
+                <div className="absolute top-8 left-8 w-80 h-48 bg-emerald-400 rounded-2xl p-6 relative overflow-hidden shadow-2xl hover:scale-105 transition-transform duration-500 ring-2 ring-emerald-400/20">
                   {/* Enhanced Glow Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-white/10"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-200/20 to-transparent"></div>
+                  <div className="absolute inset-0 bg-white/10"></div>
+                  <div className="absolute inset-0 bg-emerald-200/10"></div>
                   
                   <div className="relative z-10 h-full flex flex-col justify-between text-white">
                     <div className="flex justify-between items-start">
@@ -127,10 +127,10 @@ const FindPerfectCardSection = () => {
               </div>
 
               {/* Enhanced Floating Elements */}
-              <div className="absolute -top-8 -right-8 w-12 h-12 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full animate-pulse shadow-lg flex items-center justify-center">
+              <div className="absolute -top-8 -right-8 w-12 h-12 bg-emerald-500 rounded-full animate-pulse shadow-lg flex items-center justify-center">
                 <Target size={20} className="text-white" />
               </div>
-              <div className="absolute -bottom-6 -left-6 w-8 h-8 bg-gradient-to-r from-teal-400 to-cyan-400 rotate-45 shadow-lg animate-pulse delay-300"></div>
+              <div className="absolute -bottom-6 -left-6 w-8 h-8 bg-teal-500 rotate-45 shadow-lg animate-pulse delay-300"></div>
               
               {/* Additional Floating Particles */}
               <div className="absolute top-1/3 -right-4 w-3 h-3 bg-emerald-300/60 rounded-full animate-pulse delay-1000"></div>
@@ -149,7 +149,7 @@ const FindPerfectCardSection = () => {
 
               <h2 className="text-4xl md:text-5xl font-bold leading-tight text-white">
                 Find the Perfect{' '}
-                <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
+                <span className="text-emerald-400">
                   Credit Card
                 </span>{' '}
                 for You
@@ -182,7 +182,7 @@ const FindPerfectCardSection = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="group bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center gap-3">
+                <button className="group bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center gap-3">
                   <Search size={20} />
                   Find My Card
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300" />

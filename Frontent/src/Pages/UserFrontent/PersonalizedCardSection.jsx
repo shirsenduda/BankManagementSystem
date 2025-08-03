@@ -26,7 +26,7 @@ const PersonalizedCardSection = () => {
   };
 
   return (
-    <section className="py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+    <section className="py-24 bg-slate-900 relative overflow-hidden">
       {/* Enhanced Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-600/10 via-transparent to-transparent"></div>
       <div className="absolute inset-0 bg-[linear-gradient(rgba(16,185,129,.02)_1px,transparent_1px),linear-gradient(90deg,rgba(16,185,129,.02)_1px,transparent_1px)] bg-[size:32px_32px]"></div>
@@ -49,7 +49,7 @@ const PersonalizedCardSection = () => {
 
               <h2 className="text-4xl md:text-5xl font-bold leading-tight text-white">
                 Design your{' '}
-                <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
+                <span className="text-emerald-400">
                   personalized
                 </span>{' '}
                 credit card.
@@ -78,15 +78,12 @@ const PersonalizedCardSection = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <button 
                   onClick={handleCreateAccount}
-                  className="group bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center gap-3"
+                  className="group bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 flex items-center justify-center gap-3"
                 >
                   <Palette size={20} />
                   {isAuthenticated ? 'Customize Card' : 'Create account'}
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
-                {/* <button className="px-8 py-4 border border-gray-600 hover:border-gray-500 text-gray-300 hover:text-white rounded-xl font-semibold transition-all duration-300 hover:bg-white/5">
-                  View Gallery
-                </button> */}
               </div>
             </div>
           </div>
@@ -97,11 +94,11 @@ const PersonalizedCardSection = () => {
               {/* Card Stack with Enhanced Design */}
               <div className="relative">
                 {/* Green Card (Top) - Enhanced */}
-                <div className="w-80 h-48 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl p-6 relative overflow-hidden transform rotate-2 shadow-2xl hover:rotate-1 transition-transform duration-500 border border-emerald-300/20">
+                <div className="w-80 h-48 bg-emerald-500 rounded-2xl p-6 relative overflow-hidden transform rotate-2 shadow-2xl hover:rotate-1 transition-transform duration-500 border border-emerald-300/20">
                   {/* Enhanced Card Pattern */}
                   <div className="absolute inset-0">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-white/10 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
-                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-emerald-700/20 to-transparent rounded-full translate-y-12 -translate-x-12"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-16 translate-x-16"></div>
+                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-emerald-700/10 rounded-full translate-y-12 -translate-x-12"></div>
                   </div>
                   
                   <div className="relative z-10 h-full flex flex-col justify-between text-white">
@@ -131,10 +128,10 @@ const PersonalizedCardSection = () => {
                 </div>
 
                 {/* White Card (Bottom) - Enhanced */}
-                <div className="absolute top-8 left-8 w-80 h-48 bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-2xl transform -rotate-2 hover:-rotate-1 transition-transform duration-500 border border-gray-200">
+                <div className="absolute top-8 left-8 w-80 h-48 bg-white rounded-2xl p-6 shadow-2xl transform -rotate-2 hover:-rotate-1 transition-transform duration-500 border border-gray-200">
                   {/* Enhanced Pattern */}
                   <div className="absolute inset-0">
-                    <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-gray-100 to-transparent rounded-full -translate-y-14 translate-x-14"></div>
+                    <div className="absolute top-0 right-0 w-28 h-28 bg-gray-100/50 rounded-full -translate-y-14 translate-x-14"></div>
                   </div>
                   
                   <div className="relative z-10 h-full flex flex-col justify-between text-slate-800">
@@ -165,10 +162,10 @@ const PersonalizedCardSection = () => {
               </div>
 
               {/* Enhanced Floating Elements */}
-              <div className="absolute -top-6 -right-6 w-12 h-12 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full animate-pulse shadow-lg flex items-center justify-center">
+              <div className="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500 rounded-full animate-pulse shadow-lg flex items-center justify-center">
                 <Shield size={20} className="text-white" />
               </div>
-              <div className="absolute -bottom-8 -left-10 w-8 h-8 bg-gradient-to-r from-teal-400 to-cyan-400 rotate-45 animate-pulse delay-500 shadow-lg rounded-sm"></div>
+              <div className="absolute -bottom-8 -left-10 w-8 h-8 bg-teal-500 rotate-45 animate-pulse delay-500 shadow-lg rounded-sm"></div>
               
               {/* Additional Floating Particles */}
               <div className="absolute top-1/4 -left-4 w-3 h-3 bg-emerald-300/60 rounded-full animate-pulse delay-1000"></div>

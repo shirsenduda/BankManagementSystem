@@ -3,12 +3,12 @@ import BrandSlider from './BrandSlider';
 import OfferSection from './OfferSection';
 import PersonalizedCardSection from './PersonalizedCardSection';
 import FindPerfectCardSection from './FindPerfectCardSection';
-const Home =()=> {
+
+const Home = () => {
   return (
-    <div className="min-h-screen bg-dark-900">
+    <div className="min-h-screen bg-slate-900">
       <HeroSection />
-      <BrandSlider />
-      {/* <OfferSection /> */}
+      <OfferSection />
       <PersonalizedCardSection />
       <FindPerfectCardSection />
     </div>
