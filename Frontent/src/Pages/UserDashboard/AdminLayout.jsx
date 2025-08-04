@@ -10,8 +10,10 @@ const AdminLayout = () => {
         {/* Sidebar */}
         <AdminSidebar />
         
-        {/* Main Content Area - Fixed margin to match sidebar width */}
-        <div className="flex-1 ml-72 min-h-[calc(100vh-4rem)]"> {/* ml-72 to match sidebar w-72 (288px) */}
+        {/* Main Content Area - Dynamic margin based on sidebar state */}
+        <div className="flex-1 transition-all duration-300 ease-in-out min-h-[calc(100vh-4rem)]" style={{
+          marginLeft: 'var(--sidebar-width, 288px)'
+        }}>
           {/* Content Container */}
           <div className="bg-dark-900 min-h-full">
             {/* Main Content with proper padding and background */}

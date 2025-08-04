@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { CiDollar } from "react-icons/ci";
+import { IoReceipt } from "react-icons/io5";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { IoIosCard } from "react-icons/io";
 import { 
   LayoutDashboard, 
   Users, 
@@ -20,19 +24,38 @@ import {
   TrendingUp,
   AlertTriangle,
   CheckCircle,
-  Clock
+  Clock,
+  Menu,
+  X
 } from 'lucide-react';
 
 const AdminSidebar = () => {
   const [expandedSections, setExpandedSections] = useState({
     dashboard: true // Dashboard expanded by default
   });
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
+  // Update CSS custom property when sidebar state changes
+  React.useEffect(() => {
+    document.documentElement.style.setProperty('--sidebar-width', isCollapsed ? '64px' : '288px');
+  }, [isCollapsed]);
   const toggleSection = (sectionKey) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [sectionKey]: !prev[sectionKey]
-    }));
+    if (!isCollapsed) {
+      setExpandedSections(prev => ({
+        ...prev,
+        [sectionKey]: !prev[sectionKey]
+      }));
+    }
+  };
+
+  const toggleSidebar = () => {
+    setIsCollapsed(prev => !prev);
+    // Close all expanded sections when collapsing
+    if (!isCollapsed) {
+      setExpandedSections({});
+    } else {
+      setExpandedSections({ dashboard: true });
+    }
   };
 
   // Fixed sidebar navigation structure
@@ -44,12 +67,35 @@ const AdminSidebar = () => {
       exact: true,
     },
     {
+      title: 'My Banks',
+      icon: CiDollar,
+      path: '/admin/banks',
+      exact: true,
+    },
+    {
+      title: 'Transactions History',
+      icon: IoReceipt,
+      path: '/admin/transactions',
+      exact: true,
+    },
+    {
+      title: 'Transfer Funds',
+      icon: FaMoneyBillTransfer,
+      path: '/admin/transfer',
+      exact: true,
+    },
+    {
+      title: 'Connect Bank',
+      icon: IoIosCard,
+      path: '/admin/connect-bank',
+      exact: true,
+    },
+    {
       title: 'Profile',
       icon: Users,
       path: '/admin/users',
       exact: false,
     },
-    
   ];
 
   const renderMenuItem = (item, index) => {
@@ -60,30 +106,33 @@ const AdminSidebar = () => {
         <div key={index} className="mb-1">
           <button
             onClick={() => toggleSection(item.key)}
-            className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all duration-200 group"
+            className={`w-full flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} px-3 py-2.5 text-gray-300 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all duration-200 group`}
+            title={isCollapsed ? item.title : ''}
           >
-            <div className="flex items-center space-x-3">
+            <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'}`}>
               <div className="text-gray-400 group-hover:text-white transition-colors duration-200">
                 <item.icon size={18} />
               </div>
-              <span className="font-medium text-sm">{item.title}</span>
+              {!isCollapsed && <span className="font-medium text-sm">{item.title}</span>}
             </div>
-            <div className="flex items-center space-x-2">
-              {item.badge && (
-                <span className={`${item.badge.color} text-white text-xs px-1.5 py-0.5 rounded-full font-medium`}>
-                  {item.badge.text}
-                </span>
-              )}
-              {isExpanded ? (
-                <ChevronDown size={16} className="text-gray-400 transition-transform duration-200" />
-              ) : (
-                <ChevronRight size={16} className="text-gray-400 transition-transform duration-200" />
-              )}
-            </div>
+            {!isCollapsed && (
+              <div className="flex items-center space-x-2">
+                {item.badge && (
+                  <span className={`${item.badge.color} text-white text-xs px-1.5 py-0.5 rounded-full font-medium`}>
+                    {item.badge.text}
+                  </span>
+                )}
+                {isExpanded ? (
+                  <ChevronDown size={16} className="text-gray-400 transition-transform duration-200" />
+                ) : (
+                  <ChevronRight size={16} className="text-gray-400 transition-transform duration-200" />
+                )}
+              </div>
+            )}
           </button>
           
-          {/* Submenu */}
-          {isExpanded && (
+          {/* Submenu - only show when not collapsed */}
+          {!isCollapsed && isExpanded && (
             <div className="ml-6 mt-1 space-y-0.5 border-l border-slate-700/50 pl-4">
               {item.children.map((child, childIndex) => (
                 <NavLink
@@ -129,20 +178,21 @@ const AdminSidebar = () => {
         to={item.path}
         end={item.exact}
         className={({ isActive }) =>
-          `flex items-center justify-between px-3 py-2.5 rounded-lg transition-all duration-200 mb-1 group ${
+          `flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} px-3 py-2.5 rounded-lg transition-all duration-200 mb-1 group ${
             isActive
               ? 'bg-slate-700 text-white border-l-2 border-blue-500'
               : 'text-gray-300 hover:text-white hover:bg-slate-800/50'
           }`
         }
+        title={isCollapsed ? item.title : ''}
       >
-        <div className="flex items-center space-x-3">
+        <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-3'}`}>
           <div className="text-gray-400 group-hover:text-white transition-colors duration-200">
             <item.icon size={18} />
           </div>
-          <span className="font-medium text-sm">{item.title}</span>
+          {!isCollapsed && <span className="font-medium text-sm">{item.title}</span>}
         </div>
-        {item.badge && (
+        {!isCollapsed && item.badge && (
           <span className={`${item.badge.color} text-white text-xs px-1.5 py-0.5 rounded-full font-medium`}>
             {item.badge.text}
           </span>
@@ -152,7 +202,7 @@ const AdminSidebar = () => {
   };
 
   return (
-    <div className="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 bg-slate-900 border-r border-slate-700/50 overflow-hidden flex flex-col">
+    <div className={`fixed left-0 top-16 h-[calc(100vh-4rem)] ${isCollapsed ? 'w-16' : 'w-72'} bg-slate-900 border-r border-slate-700/50 overflow-hidden flex flex-col transition-all duration-300 ease-in-out`}>
       {/* Custom Scrollbar Styles */}
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
@@ -171,9 +221,18 @@ const AdminSidebar = () => {
       `}</style>
       
       {/* Header Section */}
-      <div className="p-4 border-b border-slate-700/50">
-        <h2 className="text-white font-semibold text-sm">Admin Panel</h2>
-        <p className="text-gray-400 text-xs mt-1">Banking Management System</p>
+      <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
+        <div className={`${isCollapsed ? 'hidden' : 'block'}`}>
+          <h2 className="text-white font-semibold text-sm">Admin Panel</h2>
+          <p className="text-gray-400 text-xs mt-1">Banking Management System</p>
+        </div>
+        <button
+          onClick={toggleSidebar}
+          className="text-gray-400 hover:text-white transition-colors duration-200 p-1 rounded-md hover:bg-slate-800/50"
+          title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+        >
+          {isCollapsed ? <Menu size={18} /> : <X size={18} />}
+        </button>
       </div>
 
       {/* Scrollable Navigation */}
@@ -181,16 +240,16 @@ const AdminSidebar = () => {
         scrollbarWidth: 'thin',
         scrollbarColor: '#475569 transparent'
       }}>
-        <nav className="p-4 space-y-1">
+        <nav className={`${isCollapsed ? 'p-2' : 'p-4'} space-y-1`}>
           {sidebarItems.map((item, index) => renderMenuItem(item, index))}
         </nav>
       </div>
 
       {/* Footer */}
       <div className="p-4 border-t border-slate-700/50">
-        <div className="flex items-center space-x-2 text-xs text-gray-400">
+        <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-2'} text-xs text-gray-400`}>
           <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-          <span>System Online</span>
+          {!isCollapsed && <span>System Online</span>}
         </div>
       </div>
     </div>
