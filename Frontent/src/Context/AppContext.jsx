@@ -21,6 +21,10 @@ const AppContextProvider = (props) => {
   const [transactions, setTransactions] = useState([]);
   const [balance, setBalance] = useState(0);
 
+  // Account states
+  const [accountTypes, setAccountTypes] = useState({});
+  const [selectedAccount, setSelectedAccount] = useState(null);
+
   // Clear error function
   const clearError = () => setError(null);
 
@@ -144,6 +148,8 @@ const AppContextProvider = (props) => {
       setAccounts([]);
       setTransactions([]);
       setBalance(0);
+      setSelectedAccount(null);
+      setAccountTypes({});
 
       toast.success('Logged out successfully');
       return {
@@ -337,28 +343,221 @@ const AppContextProvider = (props) => {
     }
   };
 
-  // Banking specific methods (placeholders for future implementation)
-  const getUserAccounts = useCallback(async () => {
+  // Account Management Methods
+
+  // Create new account
+  const createAccount = async (accountData) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { data } = await axios.post(`${backendUrl}/api/account/create`, accountData, {
+        headers: getAuthHeaders(),
+      });
+
+      if (data.success) {
+        // Refresh accounts list
+        await getMyAccounts();
+        toast.success(data.message || 'Account created successfully');
+        return {
+          success: true,
+          message: data.message,
+          account: data.account
+        };
+      } else {
+        throw new Error(data.message || 'Failed to create account');
+      }
+
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to create account';
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get all user accounts
+  const getMyAccounts = useCallback(async () => {
     if (!token) return;
 
     try {
       setLoading(true);
-      // Placeholder for future account fetching API
-      const { data } = await axios.get(`${backendUrl}/api/client/accounts`, {
+      setError(null);
+
+      const { data } = await axios.get(`${backendUrl}/api/account/my-accounts`, {
         headers: getAuthHeaders(),
       });
 
       if (data.success) {
         setAccounts(data.accounts);
-        return data.accounts;
+        return {
+          success: true,
+          accounts: data.accounts
+        };
+      } else {
+        throw new Error(data.message || 'Failed to fetch accounts');
       }
-    } catch (error) {
-      console.error('Error fetching accounts:', error);
-      toast.error(error.response?.data?.message || 'Failed to fetch accounts');
+
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to fetch accounts';
+      setError(errorMessage);
+      if (err.response?.status !== 401) {
+        toast.error(errorMessage);
+      }
+      return {
+        success: false,
+        message: errorMessage
+      };
     } finally {
       setLoading(false);
     }
   }, [token, backendUrl]);
+
+  // Get specific account details
+  const getAccountDetails = async (accountNumber) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { data } = await axios.get(`${backendUrl}/api/account/details/${accountNumber}`, {
+        headers: getAuthHeaders(),
+      });
+
+      if (data.success) {
+        setSelectedAccount(data.account);
+        return {
+          success: true,
+          account: data.account
+        };
+      } else {
+        throw new Error(data.message || 'Failed to fetch account details');
+      }
+
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to fetch account details';
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Update account status
+  const updateAccountStatus = async (accountId, status) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { data } = await axios.put(`${backendUrl}/api/account/status/${accountId}`, 
+        { status }, 
+        {
+          headers: getAuthHeaders(),
+        }
+      );
+
+      if (data.success) {
+        // Refresh accounts list
+        await getMyAccounts();
+        toast.success(data.message || 'Account status updated successfully');
+        return {
+          success: true,
+          message: data.message,
+          account: data.account
+        };
+      } else {
+        throw new Error(data.message || 'Failed to update account status');
+      }
+
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to update account status';
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get account types and their features
+  const getAccountTypes = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { data } = await axios.get(`${backendUrl}/api/account/types`);
+
+      if (data.success) {
+        setAccountTypes(data.accountTypes);
+        return {
+          success: true,
+          accountTypes: data.accountTypes
+        };
+      } else {
+        throw new Error(data.message || 'Failed to fetch account types');
+      }
+
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to fetch account types';
+      setError(errorMessage);
+      return {
+        success: false,
+        message: errorMessage
+      };
+    } finally {
+      setLoading(false);
+    }
+  }, [backendUrl]);
+
+  // Close account
+  const closeAccount = async (accountId) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { data } = await axios.delete(`${backendUrl}/api/account/close/${accountId}`, {
+        headers: getAuthHeaders(),
+      });
+
+      if (data.success) {
+        // Refresh accounts list
+        await getMyAccounts();
+        toast.success(data.message || 'Account closed successfully');
+        return {
+          success: true,
+          message: data.message,
+          account: data.account
+        };
+      } else {
+        throw new Error(data.message || 'Failed to close account');
+      }
+
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || err.message || 'Failed to close account';
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Legacy methods for backward compatibility
+  const getUserAccounts = getMyAccounts;
 
   const getUserTransactions = useCallback(async (params = {}) => {
     if (!token) return;
@@ -407,6 +606,26 @@ const AppContextProvider = (props) => {
     }
   }, [token, backendUrl]);
 
+  // Utility methods
+  const getAccountByNumber = (accountNumber) => {
+    return accounts.find(account => account.accountNumber === accountNumber);
+  };
+
+  const getAccountsByType = (accountType) => {
+    return accounts.filter(account => account.accountType === accountType);
+  };
+
+  const getTotalBalance = () => {
+    return accounts.reduce((total, account) => total + (account.balance || 0), 0);
+  };
+
+  const canCreateAccountType = (accountType) => {
+    const existingAccount = accounts.find(
+      account => account.accountType === accountType && account.status !== 'Closed'
+    );
+    return !existingAccount;
+  };
+
   // Check authentication on app load
   useEffect(() => {
     if (token) {
@@ -446,14 +665,32 @@ const AppContextProvider = (props) => {
     accounts,
     transactions,
     balance,
+    accountTypes,
+    selectedAccount,
 
-    // Banking specific methods
+    // Account management methods
+    createAccount,
+    getMyAccounts,
+    getAccountDetails,
+    updateAccountStatus,
+    getAccountTypes,
+    closeAccount,
+
+    // Legacy methods for backward compatibility
     getUserAccounts,
     getUserTransactions,
     getUserBalance,
 
-    // Utilities
-    setError
+    // Utility methods
+    getAccountByNumber,
+    getAccountsByType,
+    getTotalBalance,
+    canCreateAccountType,
+
+    // State setters
+    setError,
+    setSelectedAccount,
+    setAccounts
   };
 
   return (

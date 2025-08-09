@@ -155,20 +155,6 @@ const Profile = () => {
             <div className="flex-1">
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
                 <h1 className="text-3xl font-bold text-white">{userData.name}</h1>
-                {/* <div className="flex items-center gap-2">
-                  {userData.status === 'Active' ? (
-                    <CheckCircle className="w-5 h-5 text-green-400" />
-                  ) : (
-                    <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                  )}
-                  <span className={`text-sm font-medium px-3 py-1 rounded-full ${
-                    userData.status === 'Active' 
-                      ? 'bg-green-900/30 text-green-400 border border-green-800' 
-                      : 'bg-red-900/30 text-red-400 border border-red-800'
-                  }`}>
-                    {userData.status}
-                  </span>
-                </div> */}
               </div>
               
               <div className="text-gray-300 mb-6">
@@ -176,7 +162,7 @@ const Profile = () => {
                   <Mail className="w-4 h-4 text-blue-400" />
                   {userData.email}
                 </p>
-                <p className="text-sm text-gray-400">Account: {userData.accountNumber} • {userData.accountType}</p>
+                <p className="text-sm text-gray-400">Account: {userData.accountNumber}</p>
               </div>
 
               {/* Action Buttons */}
@@ -280,26 +266,6 @@ const Profile = () => {
                     </div>
                   )}
                 </div>
-
-                {/* <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-300 mb-2">Address</label>
-                  {isEditing ? (
-                    <textarea
-                      name="address"
-                      value={profileData.address}
-                      onChange={handleInputChange}
-                      rows="3"
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    />
-                  ) : (
-                    <div className="px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg">
-                      <div className="flex items-start gap-2 text-white">
-                        <MapPin className="w-4 h-4 text-gray-400 mt-0.5" />
-                        <span>{userData.address || 'Not provided'}</span>
-                      </div>
-                    </div>
-                  )}
-                </div> */}
 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">City</label>
@@ -417,11 +383,6 @@ const Profile = () => {
                   <p className="text-white font-mono text-lg">{userData.accountNumber}</p>
                 </div>
                 
-                <div>
-                  <label className="block text-xs font-medium text-gray-400 mb-1">ACCOUNT TYPE</label>
-                  <p className="text-white font-medium">{userData.accountType}</p>
-                </div>
-                
                 <hr className="border-gray-600" />
                 
                 <div>
@@ -433,16 +394,6 @@ const Profile = () => {
                   <label className="block text-xs font-medium text-gray-400 mb-1">ID NUMBER</label>
                   <p className="text-white font-mono">{userData.idNumber}</p>
                 </div>
-
-                {userData.initialDeposit && (
-                  <>
-                    <hr className="border-gray-600" />
-                    <div>
-                      <label className="block text-xs font-medium text-gray-400 mb-1">INITIAL DEPOSIT</label>
-                      <p className="text-green-400 font-semibold text-lg">{formatCurrency(userData.initialDeposit)}</p>
-                    </div>
-                  </>
-                )}
               </div>
             </div>
 

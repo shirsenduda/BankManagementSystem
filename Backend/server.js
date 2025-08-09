@@ -6,6 +6,7 @@ import connectDB from "./Config/mongodb.js";
 import connectCloudinary from "./Config/cloudinary.js";
 import adminRouter from "./routes/adminRoute.js";
 import clientrouter from "./routes/clientRoute.js";
+import accountRoute from "./routes/accountRoute.js";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -23,6 +24,7 @@ const startServer = async () => {
         // Routes
         app.use("/api/admin", adminRouter);
         app.use("/api/client", clientrouter);
+        app.use("/api/account",accountRoute);
         app.get("/", (req, res) => {
             res.send("Welcome to the Banking System API");
         });

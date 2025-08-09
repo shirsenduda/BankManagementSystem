@@ -67,21 +67,21 @@ const AdminSidebar = () => {
       exact: true,
     },
     {
-      title: 'My Banks',
+      title: 'Accounts',
       icon: CiDollar,
-      path: '/admin/banks',
-      exact: true,
-    },
-    {
-      title: 'Transactions History',
-      icon: IoReceipt,
-      path: '/admin/transactions',
+      path: '/admin/Accounts',
       exact: true,
     },
     {
       title: 'Transfer Funds',
       icon: FaMoneyBillTransfer,
       path: '/admin/transfer',
+      exact: true,
+    },
+    {
+      title: 'Transactions History',
+      icon: IoReceipt,
+      path: '/admin/transactions',
       exact: true,
     },
     {

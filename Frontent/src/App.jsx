@@ -15,10 +15,10 @@ import AppContextProvider from "./Context/AppContext";
 import AdminLayout from "./Pages/UserDashboard/AdminLayout";
 import AdminDashboard from "./Pages/UserDashboard/AdminDashboard";
 import Profile from "./Pages/UserDashboard/Profile";
-import MyBank from "./Pages/UserDashboard/MyBank";
 import TransactionHistory from "./Pages/UserDashboard/TransactionHistory";
 import ConnectBank from "./Pages/UserDashboard/ConnectBank";
 import TransferFunds from "./Pages/UserDashboard/TransferFunds";
+import Accounts from "./Pages/UserDashboard/Accounts";
 
 // Component to conditionally show footer
 const ConditionalFooter = () => {
@@ -46,7 +46,7 @@ const AppContent = () => {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="users" element={<Profile />} />
-          <Route path="banks" element={<MyBank />} />
+          <Route path="Accounts" element={<Accounts />} />
           <Route path="transactions" element={<TransactionHistory />} />
           <Route path="transfer" element={<TransferFunds />} />
           <Route path="connect-bank" element={<ConnectBank />} />

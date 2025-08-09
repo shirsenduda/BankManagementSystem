@@ -18,15 +18,14 @@ const registerClient = async (req, res) => {
     try {
         const {
             name, email, password, gender, city, state, postalCode,
-            idType, idNumber, occupation, monthlyIncome, accountType,
-            initialDeposit, nomineeName, nomineeRelation, nomineePhone
+            idType, idNumber, occupation, monthlyIncome,
+            nomineeName, nomineeRelation, nomineePhone
         } = req.body;
 
         // Validation
         if (!name || !email || !password || !gender || !city || !state || 
             !postalCode || !idType || !idNumber || !occupation || 
-            !monthlyIncome || !accountType || !initialDeposit || 
-            !nomineeName || !nomineeRelation || !nomineePhone) {
+            !monthlyIncome || !nomineeName || !nomineeRelation || !nomineePhone) {
             return res.status(400).json({
                 success: false,
                 message: 'All required fields must be provided'
@@ -62,14 +61,6 @@ const registerClient = async (req, res) => {
             });
         }
 
-        // Validate initial deposit
-        if (initialDeposit < 100) {
-            return res.status(400).json({
-                success: false,
-                message: 'Initial deposit must be at least $100'
-            });
-        }
-
         // Hash password
         const saltRounds = 12;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -87,8 +78,6 @@ const registerClient = async (req, res) => {
             idNumber,
             occupation,
             monthlyIncome,
-            accountType,
-            initialDeposit,
             nomineeName,
             nomineeRelation,
             nomineePhone
@@ -105,7 +94,6 @@ const registerClient = async (req, res) => {
             name: newClient.name,
             email: newClient.email,
             accountNumber: newClient.accountNumber,
-            accountType: newClient.accountType,
             status: newClient.status,
             image: newClient.image
         };
@@ -176,7 +164,6 @@ const loginClient = async (req, res) => {
             name: client.name,
             email: client.email,
             accountNumber: client.accountNumber,
-            accountType: client.accountType,
             status: client.status,
             image: client.image,
             phone: client.phone,

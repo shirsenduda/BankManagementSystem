@@ -42,10 +42,6 @@ const Login = () => {
     occupation: '',
     monthlyIncome: '',
     
-    // Banking
-    accountType: 'Savings',
-    initialDeposit: '',
-    
     // Nominee Information
     nomineeName: '',
     nomineeRelation: '',
@@ -171,9 +167,6 @@ const Login = () => {
     if (step === 3) {
       if (!signupData.occupation) errors.occupation = 'Occupation is required';
       if (!signupData.monthlyIncome) errors.monthlyIncome = 'Monthly income is required';
-      if (!signupData.accountType) errors.accountType = 'Account type is required';
-      if (!signupData.initialDeposit) errors.initialDeposit = 'Initial deposit is required';
-      if (parseFloat(signupData.initialDeposit) < 100) errors.initialDeposit = 'Initial deposit must be at least $100';
     }
     
     if (step === 4) {
@@ -249,8 +242,6 @@ const Login = () => {
       idNumber: signupData.idNumber,
       occupation: signupData.occupation,
       monthlyIncome: parseFloat(signupData.monthlyIncome),
-      accountType: signupData.accountType,
-      initialDeposit: parseFloat(signupData.initialDeposit),
       nomineeName: signupData.nomineeName,
       nomineeRelation: signupData.nomineeRelation,
       nomineePhone: signupData.nomineePhone
@@ -271,7 +262,7 @@ const Login = () => {
   const stepTitles = [
     'Personal Information',
     'Address & Identification',
-    'Employment & Banking',
+    'Employment Information',
     'Nominee & Security'
   ];
 
@@ -567,44 +558,6 @@ const Login = () => {
             />
           </div>
           {validationErrors.monthlyIncome && <p className="text-red-400 text-xs mt-1">{validationErrors.monthlyIncome}</p>}
-        </div>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-4">
-        <div className="relative">
-          <label className="block text-sm font-medium text-gray-300 mb-2">Account Type</label>
-          <select
-            name="accountType"
-            value={signupData.accountType}
-            onChange={handleSignupChange}
-            className={`w-full px-4 py-3 bg-white/5 border rounded-xl text-white transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
-              validationErrors.accountType ? 'border-red-500/50' : 'border-white/20'
-            }`}
-          >
-            <option value="Savings">Savings Account</option>
-            <option value="Checking">Checking Account</option>
-            <option value="Business">Business Account</option>
-          </select>
-          {validationErrors.accountType && <p className="text-red-400 text-xs mt-1">{validationErrors.accountType}</p>}
-        </div>
-
-        <div className="relative">
-          <label className="block text-sm font-medium text-gray-300 mb-2">Initial Deposit</label>
-          <div className="relative">
-            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <input
-              type="number"
-              name="initialDeposit"
-              value={signupData.initialDeposit}
-              onChange={handleSignupChange}
-              className={`w-full pl-12 pr-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-400 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 ${
-                validationErrors.initialDeposit ? 'border-red-500/50' : 'border-white/20'
-              }`}
-              placeholder="Minimum $100"
-              min="100"
-            />
-          </div>
-          {validationErrors.initialDeposit && <p className="text-red-400 text-xs mt-1">{validationErrors.initialDeposit}</p>}
         </div>
       </div>
     </div>
