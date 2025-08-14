@@ -153,7 +153,7 @@ const AccountCard = ({ account, onCopyAccount }) => {
       {/* Bank Card Design */}
       <div className="group relative">
         {/* Main Card - Credit Card Size (3.375" × 2.125") */}
-        <div className={`w-80 h-48 bg-gradient-to-br ${getCardColors(account.accountType)} rounded-xl p-5 text-white relative overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl shadow-xl ${isAccountClosed ? 'opacity-60 grayscale' : ''}`}>
+        <div className={`w-80 h-48 bg-gradient-to-br ${getCardColors(account.accountType)} rounded-xl p-5 text-white relative overflow-hidden transition-all duration-300 hover:scale-[1.00] hover:shadow-1xl shadow-xl ${isAccountClosed ? 'opacity-60 grayscale' : ''}`}>
           
           {/* Sophisticated Pattern */}
           <div className="absolute inset-0 opacity-10">

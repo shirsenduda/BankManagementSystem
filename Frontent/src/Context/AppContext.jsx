@@ -7,8 +7,9 @@ export const AppContext = createContext();
 const AppContextProvider = (props) => {
   // Banking App Context states
   const currencySymbol = "$";
-  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
-  
+  const backendUrl =
+    import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+
   // Authentication states
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [userData, setUserData] = useState(false);
@@ -31,8 +32,8 @@ const AppContextProvider = (props) => {
   // Set auth token in headers
   const getAuthHeaders = () => {
     return {
-      'Content-Type': 'application/json',
-      ...(token && { Authorization: `Bearer ${token}` })
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
     };
   };
 
@@ -42,36 +43,42 @@ const AppContextProvider = (props) => {
       setLoading(true);
       setError(null);
 
-      const { data } = await axios.post(`${backendUrl}/api/client/login`, loginData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const { data } = await axios.post(
+        `${backendUrl}/api/client/login`,
+        loginData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (data.success) {
         // Store token and user data
-        localStorage.setItem('token', data.token);
+        localStorage.setItem("token", data.token);
         setToken(data.token);
         setUserData(data.client);
         setIsAuthenticated(true);
-        
-        toast.success(data.message || 'Login successful');
+
+        toast.success(data.message || "Login successful");
         return {
           success: true,
           message: data.message,
-          user: data.client
+          user: data.client,
         };
       } else {
-        throw new Error(data.message || 'Login failed');
+        throw new Error(data.message || "Login failed");
       }
-
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'Login failed. Please try again.';
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Login failed. Please try again.";
       setError(errorMessage);
       toast.error(errorMessage);
       return {
         success: false,
-        message: errorMessage
+        message: errorMessage,
       };
     } finally {
       setLoading(false);
@@ -87,42 +94,48 @@ const AppContextProvider = (props) => {
       // The signupData now comes properly formatted from the Login component
       const backendData = signupData;
 
-      const { data } = await axios.post(`${backendUrl}/api/client/register`, backendData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const { data } = await axios.post(
+        `${backendUrl}/api/client/register`,
+        backendData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (data.success) {
         // Store token and user data
-        localStorage.setItem('token', data.token);
+        localStorage.setItem("token", data.token);
         setToken(data.token);
         setUserData(data.client);
         setIsAuthenticated(true);
-        
-        toast.success(data.message || 'Registration successful');
+
+        toast.success(data.message || "Registration successful");
         return {
           success: true,
           message: data.message,
-          user: data.client
+          user: data.client,
         };
       } else {
-        throw new Error(data.message || 'Registration failed');
+        throw new Error(data.message || "Registration failed");
       }
-
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'Registration failed. Please try again.';
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Registration failed. Please try again.";
       setError(errorMessage);
       toast.error(errorMessage);
       return {
         success: false,
-        message: errorMessage
+        message: errorMessage,
       };
     } finally {
       setLoading(false);
     }
   };
-  
+
   // Authentication methods for user
   const logout = async () => {
     try {
@@ -131,17 +144,21 @@ const AppContextProvider = (props) => {
       // Call backend logout if token exists
       if (token) {
         try {
-          await axios.post(`${backendUrl}/api/client/logout`, {}, {
-            headers: getAuthHeaders(),
-          });
+          await axios.post(
+            `${backendUrl}/api/client/logout`,
+            {},
+            {
+              headers: getAuthHeaders(),
+            }
+          );
         } catch (logoutError) {
-          console.warn('Logout API call failed:', logoutError);
+          console.warn("Logout API call failed:", logoutError);
         }
       }
 
       // Clear local storage and state
-      localStorage.removeItem('token');
-      setToken('');
+      localStorage.removeItem("token");
+      setToken("");
       setUserData(false);
       setIsAuthenticated(false);
       setError(null);
@@ -151,23 +168,22 @@ const AppContextProvider = (props) => {
       setSelectedAccount(null);
       setAccountTypes({});
 
-      toast.success('Logged out successfully');
+      toast.success("Logged out successfully");
       return {
         success: true,
-        message: 'Logged out successfully'
+        message: "Logged out successfully",
       };
-
     } catch (err) {
-      console.error('Logout error:', err);
+      console.error("Logout error:", err);
       // Clear local state even if backend call fails
-      localStorage.removeItem('token');
-      setToken('');
+      localStorage.removeItem("token");
+      setToken("");
       setUserData(false);
       setIsAuthenticated(false);
-      
+
       return {
         success: true,
-        message: 'Logged out successfully'
+        message: "Logged out successfully",
       };
     } finally {
       setLoading(false);
@@ -191,28 +207,28 @@ const AppContextProvider = (props) => {
         setIsAuthenticated(true);
         return {
           success: true,
-          user: data.client
+          user: data.client,
         };
       } else {
         if (data.status === 401) {
           // Token expired or invalid
           logout();
-          throw new Error('Session expired. Please login again.');
+          throw new Error("Session expired. Please login again.");
         }
-        throw new Error(data.message || 'Failed to fetch profile');
+        throw new Error(data.message || "Failed to fetch profile");
       }
-
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to fetch profile';
+      const errorMessage =
+        err.response?.data?.message || err.message || "Failed to fetch profile";
       setError(errorMessage);
-      
+
       if (err.response?.status === 401) {
         logout();
       }
-      
+
       return {
         success: false,
-        message: errorMessage
+        message: errorMessage,
       };
     } finally {
       setLoading(false);
@@ -225,34 +241,40 @@ const AppContextProvider = (props) => {
       setLoading(true);
       setError(null);
 
-      const { data } = await axios.put(`${backendUrl}/api/client/profile`, profileData, {
-        headers: getAuthHeaders(),
-      });
+      const { data } = await axios.put(
+        `${backendUrl}/api/client/profile`,
+        profileData,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
 
       if (data.success) {
         setUserData(data.client);
-        toast.success(data.message || 'Profile updated successfully');
+        toast.success(data.message || "Profile updated successfully");
         return {
           success: true,
           message: data.message,
-          user: data.client
+          user: data.client,
         };
       } else {
-        throw new Error(data.message || 'Failed to update profile');
+        throw new Error(data.message || "Failed to update profile");
       }
-
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to update profile';
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to update profile";
       setError(errorMessage);
       toast.error(errorMessage);
-      
+
       if (err.response?.status === 401) {
         logout();
       }
-      
+
       return {
         success: false,
-        message: errorMessage
+        message: errorMessage,
       };
     } finally {
       setLoading(false);
@@ -266,39 +288,43 @@ const AppContextProvider = (props) => {
       setError(null);
 
       const formData = new FormData();
-      formData.append('image', imageFile);
+      formData.append("image", imageFile);
 
-      const { data } = await axios.post(`${backendUrl}/api/client/upload-image`, formData, {
-        headers: {
-          ...(token && { Authorization: `Bearer ${token}` })
-        },
-      });
+      const { data } = await axios.post(
+        `${backendUrl}/api/client/upload-image`,
+        formData,
+        {
+          headers: {
+            ...(token && { Authorization: `Bearer ${token}` }),
+          },
+        }
+      );
 
       if (data.success) {
         setUserData(data.client);
-        toast.success(data.message || 'Profile image updated successfully');
+        toast.success(data.message || "Profile image updated successfully");
         return {
           success: true,
           message: data.message,
           imageUrl: data.imageUrl,
-          user: data.client
+          user: data.client,
         };
       } else {
-        throw new Error(data.message || 'Failed to upload image');
+        throw new Error(data.message || "Failed to upload image");
       }
-
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to upload image';
+      const errorMessage =
+        err.response?.data?.message || err.message || "Failed to upload image";
       setError(errorMessage);
       toast.error(errorMessage);
-      
+
       if (err.response?.status === 401) {
         logout();
       }
-      
+
       return {
         success: false,
-        message: errorMessage
+        message: errorMessage,
       };
     } finally {
       setLoading(false);
@@ -311,32 +337,38 @@ const AppContextProvider = (props) => {
       setLoading(true);
       setError(null);
 
-      const { data } = await axios.put(`${backendUrl}/api/client/change-password`, passwordData, {
-        headers: getAuthHeaders(),
-      });
+      const { data } = await axios.put(
+        `${backendUrl}/api/client/change-password`,
+        passwordData,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
 
       if (data.success) {
-        toast.success(data.message || 'Password changed successfully');
+        toast.success(data.message || "Password changed successfully");
         return {
           success: true,
-          message: data.message
+          message: data.message,
         };
       } else {
-        throw new Error(data.message || 'Failed to change password');
+        throw new Error(data.message || "Failed to change password");
       }
-
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to change password';
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to change password";
       setError(errorMessage);
       toast.error(errorMessage);
-      
+
       if (err.response?.status === 401) {
         logout();
       }
-      
+
       return {
         success: false,
-        message: errorMessage
+        message: errorMessage,
       };
     } finally {
       setLoading(false);
@@ -351,30 +383,36 @@ const AppContextProvider = (props) => {
       setLoading(true);
       setError(null);
 
-      const { data } = await axios.post(`${backendUrl}/api/account/create`, accountData, {
-        headers: getAuthHeaders(),
-      });
+      const { data } = await axios.post(
+        `${backendUrl}/api/account/create`,
+        accountData,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
 
       if (data.success) {
         // Refresh accounts list
         await getMyAccounts();
-        toast.success(data.message || 'Account created successfully');
+        toast.success(data.message || "Account created successfully");
         return {
           success: true,
           message: data.message,
-          account: data.account
+          account: data.account,
         };
       } else {
-        throw new Error(data.message || 'Failed to create account');
+        throw new Error(data.message || "Failed to create account");
       }
-
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to create account';
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to create account";
       setError(errorMessage);
       toast.error(errorMessage);
       return {
         success: false,
-        message: errorMessage
+        message: errorMessage,
       };
     } finally {
       setLoading(false);
@@ -389,29 +427,34 @@ const AppContextProvider = (props) => {
       setLoading(true);
       setError(null);
 
-      const { data } = await axios.get(`${backendUrl}/api/account/my-accounts`, {
-        headers: getAuthHeaders(),
-      });
+      const { data } = await axios.get(
+        `${backendUrl}/api/account/my-accounts`,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
 
       if (data.success) {
         setAccounts(data.accounts);
         return {
           success: true,
-          accounts: data.accounts
+          accounts: data.accounts,
         };
       } else {
-        throw new Error(data.message || 'Failed to fetch accounts');
+        throw new Error(data.message || "Failed to fetch accounts");
       }
-
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to fetch accounts';
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to fetch accounts";
       setError(errorMessage);
       if (err.response?.status !== 401) {
         toast.error(errorMessage);
       }
       return {
         success: false,
-        message: errorMessage
+        message: errorMessage,
       };
     } finally {
       setLoading(false);
@@ -424,27 +467,32 @@ const AppContextProvider = (props) => {
       setLoading(true);
       setError(null);
 
-      const { data } = await axios.get(`${backendUrl}/api/account/details/${accountNumber}`, {
-        headers: getAuthHeaders(),
-      });
+      const { data } = await axios.get(
+        `${backendUrl}/api/account/details/${accountNumber}`,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
 
       if (data.success) {
         setSelectedAccount(data.account);
         return {
           success: true,
-          account: data.account
+          account: data.account,
         };
       } else {
-        throw new Error(data.message || 'Failed to fetch account details');
+        throw new Error(data.message || "Failed to fetch account details");
       }
-
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to fetch account details';
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to fetch account details";
       setError(errorMessage);
       toast.error(errorMessage);
       return {
         success: false,
-        message: errorMessage
+        message: errorMessage,
       };
     } finally {
       setLoading(false);
@@ -457,8 +505,9 @@ const AppContextProvider = (props) => {
       setLoading(true);
       setError(null);
 
-      const { data } = await axios.put(`${backendUrl}/api/account/status/${accountId}`, 
-        { status }, 
+      const { data } = await axios.put(
+        `${backendUrl}/api/account/status/${accountId}`,
+        { status },
         {
           headers: getAuthHeaders(),
         }
@@ -467,23 +516,25 @@ const AppContextProvider = (props) => {
       if (data.success) {
         // Refresh accounts list
         await getMyAccounts();
-        toast.success(data.message || 'Account status updated successfully');
+        toast.success(data.message || "Account status updated successfully");
         return {
           success: true,
           message: data.message,
-          account: data.account
+          account: data.account,
         };
       } else {
-        throw new Error(data.message || 'Failed to update account status');
+        throw new Error(data.message || "Failed to update account status");
       }
-
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to update account status';
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to update account status";
       setError(errorMessage);
       toast.error(errorMessage);
       return {
         success: false,
-        message: errorMessage
+        message: errorMessage,
       };
     } finally {
       setLoading(false);
@@ -502,18 +553,20 @@ const AppContextProvider = (props) => {
         setAccountTypes(data.accountTypes);
         return {
           success: true,
-          accountTypes: data.accountTypes
+          accountTypes: data.accountTypes,
         };
       } else {
-        throw new Error(data.message || 'Failed to fetch account types');
+        throw new Error(data.message || "Failed to fetch account types");
       }
-
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to fetch account types';
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to fetch account types";
       setError(errorMessage);
       return {
         success: false,
-        message: errorMessage
+        message: errorMessage,
       };
     } finally {
       setLoading(false);
@@ -526,31 +579,839 @@ const AppContextProvider = (props) => {
       setLoading(true);
       setError(null);
 
-      const { data } = await axios.delete(`${backendUrl}/api/account/close/${accountId}`, {
-        headers: getAuthHeaders(),
-      });
+      const { data } = await axios.delete(
+        `${backendUrl}/api/account/close/${accountId}`,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
 
       if (data.success) {
         // Refresh accounts list
         await getMyAccounts();
-        toast.success(data.message || 'Account closed successfully');
+        toast.success(data.message || "Account closed successfully");
         return {
           success: true,
           message: data.message,
-          account: data.account
+          account: data.account,
         };
       } else {
-        throw new Error(data.message || 'Failed to close account');
+        throw new Error(data.message || "Failed to close account");
       }
-
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message || 'Failed to close account';
+      const errorMessage =
+        err.response?.data?.message || err.message || "Failed to close account";
       setError(errorMessage);
       toast.error(errorMessage);
       return {
         success: false,
-        message: errorMessage
+        message: errorMessage,
       };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Transaction Management Methods
+
+  // Search account by ID for transfer
+  const searchAccountById = async (accountId) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { data } = await axios.get(
+        `${backendUrl}/api/account/search/${accountId}`,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
+
+      if (data.success) {
+        return {
+          success: true,
+          account: data.account,
+        };
+      } else {
+        throw new Error(data.message || "Failed to find account");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to search account";
+      setError(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get all active accounts for search
+  const getAllActiveAccounts = async (searchParams = {}) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const queryParams = new URLSearchParams({
+        page: searchParams.page || 1,
+        limit: searchParams.limit || 10,
+        ...(searchParams.search && { search: searchParams.search }),
+      });
+
+      const { data } = await axios.get(
+        `${backendUrl}/api/account/all-active?${queryParams}`,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
+
+      if (data.success) {
+        return {
+          success: true,
+          accounts: data.accounts,
+          pagination: data.pagination,
+        };
+      } else {
+        throw new Error(data.message || "Failed to fetch accounts");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to fetch accounts";
+      setError(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get accounts by type for transfers (recipient accounts)
+  const getAccountsByType = async (accountType, searchParams = {}) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const queryParams = new URLSearchParams({
+        page: searchParams.page || 1,
+        limit: searchParams.limit || 20,
+        ...(searchParams.search && { search: searchParams.search }),
+      });
+
+      const { data } = await axios.get(
+        `${backendUrl}/api/transaction/accounts-by-type/${accountType}?${queryParams}`,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
+
+      if (data.success) {
+        return {
+          success: true,
+          accounts: data.accounts,
+        };
+      } else {
+        throw new Error(data.message || "Failed to fetch recipient accounts");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to fetch recipient accounts";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Get user's sender accounts by type
+  const getMySenderAccounts = async (accountType) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { data } = await axios.get(
+        `${backendUrl}/api/transaction/my-accounts/${accountType}`,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
+
+      if (data.success) {
+        return {
+          success: true,
+          accounts: data.accounts,
+        };
+      } else {
+        throw new Error(data.message || "Failed to fetch sender accounts");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to fetch sender accounts";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Enhanced get recipient accounts with better search and pagination
+  const getRecipientAccounts = async (accountType, searchParams = {}) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const queryParams = new URLSearchParams({
+        page: searchParams.page || 1,
+        limit: searchParams.limit || 20,
+        ...(searchParams.search && { search: searchParams.search }),
+      });
+
+      const { data } = await axios.get(
+        `${backendUrl}/api/account/recipients/${accountType}?${queryParams}`,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
+
+      if (data.success) {
+        return {
+          success: true,
+          message: data.message,
+          accounts: data.accounts,
+          pagination: data.pagination,
+        };
+      } else {
+        throw new Error(data.message || "Failed to fetch recipient accounts");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to fetch recipient accounts";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Create Razorpay order for fund transfer
+  const createTransferOrder = async (transferData) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { data } = await axios.post(
+        `${backendUrl}/api/transaction/create-order`,
+        transferData,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
+
+      if (data.success) {
+        return {
+          success: true,
+          message: data.message,
+          order: data.order,
+          transferDetails: data.transferDetails,
+        };
+      } else {
+        throw new Error(data.message || "Failed to create transfer order");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to create transfer order";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Replace the verifyAndCompleteTransfer function in your AppContext.jsx with this fixed version:
+
+  // Verify and complete fund transfer
+  const verifyAndCompleteTransfer = async (paymentData) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      console.log("=== VERIFY TRANSFER START ===");
+      console.log("Original payment data received:", paymentData);
+
+      // FIXED: Proper field mapping to match what Razorpay actually sends
+      const backendPaymentData = {
+        // Handle all possible Razorpay response formats
+        razorpay_order_id:
+          paymentData.razorpay_order_id ||
+          paymentData.orderId ||
+          paymentData.order_id ||
+          (paymentData.orderData && paymentData.orderData.id),
+
+        razorpay_payment_id:
+          paymentData.razorpay_payment_id ||
+          paymentData.paymentId ||
+          paymentData.payment_id ||
+          paymentData.razorpay_payment_id,
+
+        razorpay_signature:
+          paymentData.razorpay_signature ||
+          paymentData.signature ||
+          paymentData.razorpaySignature,
+      };
+
+      console.log("Mapped payment data for backend:", backendPaymentData);
+
+      // Validate required fields with detailed error messages
+      const missingFields = [];
+      if (!backendPaymentData.razorpay_order_id) {
+        missingFields.push("razorpay_order_id");
+      }
+      if (!backendPaymentData.razorpay_payment_id) {
+        missingFields.push("razorpay_payment_id");
+      }
+      if (!backendPaymentData.razorpay_signature) {
+        missingFields.push("razorpay_signature");
+      }
+
+      if (missingFields.length > 0) {
+        const errorMessage = `Missing required payment fields: ${missingFields.join(
+          ", "
+        )}`;
+        console.error("Validation error:", errorMessage);
+        console.error("Available fields:", Object.keys(paymentData));
+        throw new Error(errorMessage);
+      }
+
+      const { data } = await axios.post(
+        `${backendUrl}/api/transaction/verify-transfer`,
+        backendPaymentData,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
+
+      console.log("Backend response:", data);
+
+      if (data.success) {
+        // Refresh accounts and transactions after successful transfer
+        await getMyAccounts();
+        await getTransactionHistory();
+
+        toast.success(data.message || "Transfer completed successfully");
+        console.log("=== VERIFY TRANSFER SUCCESS ===");
+        return {
+          success: true,
+          message: data.message,
+          transaction: data.transaction,
+        };
+      } else {
+        throw new Error(data.message || "Failed to complete transfer");
+      }
+    } catch (err) {
+      console.error("=== VERIFY TRANSFER ERROR ===");
+      console.error("Error details:", err);
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to complete transfer";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Enhanced transaction history with filtering
+  const getTransactionHistory = useCallback(
+    async (params = {}) => {
+      if (!token) return;
+
+      try {
+        setLoading(true);
+        setError(null);
+
+        const queryParams = new URLSearchParams({
+          page: params.page || 1,
+          limit: params.limit || 10,
+          ...(params.type && { type: params.type }), // 'sent', 'received', or undefined for all
+        });
+
+        const { data } = await axios.get(
+          `${backendUrl}/api/transaction/history?${queryParams}`,
+          {
+            headers: getAuthHeaders(),
+          }
+        );
+
+        if (data.success) {
+          setTransactions(data.transactions);
+          return {
+            success: true,
+            transactions: data.transactions,
+            pagination: data.pagination,
+          };
+        } else {
+          throw new Error(
+            data.message || "Failed to fetch transaction history"
+          );
+        }
+      } catch (err) {
+        const errorMessage =
+          err.response?.data?.message ||
+          err.message ||
+          "Failed to fetch transaction history";
+        setError(errorMessage);
+        if (err.response?.status !== 401) {
+          toast.error(errorMessage);
+        }
+        return {
+          success: false,
+          message: errorMessage,
+        };
+      } finally {
+        setLoading(false);
+      }
+    },
+    [token, backendUrl]
+  );
+
+  // Get detailed transaction information
+  const getTransactionDetails = async (transactionId) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { data } = await axios.get(
+        `${backendUrl}/api/transaction/details/${transactionId}`,
+        {
+          headers: getAuthHeaders(),
+        }
+      );
+
+      if (data.success) {
+        return {
+          success: true,
+          transaction: data.transaction,
+        };
+      } else {
+        throw new Error(data.message || "Failed to fetch transaction details");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to fetch transaction details";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Utility Functions for Transfer Logic
+
+  const calculateTransferFees = (amount, accountType = "Savings") => {
+    try {
+      const numericAmount = parseFloat(amount);
+
+      if (accountType === "Current") {
+        if (numericAmount <= 50000) return 0;
+        if (numericAmount <= 100000) return Math.round(numericAmount * 0.005);
+        return Math.round(numericAmount * 0.003);
+      } else {
+        // Savings account fee structure
+        if (numericAmount <= 1000) return 5;
+        if (numericAmount <= 10000) return 10;
+        return Math.min(Math.round(numericAmount * 0.001), 100);
+      }
+    } catch (error) {
+      console.error("Fee calculation error:", error);
+      return 10; // Default fee
+    }
+  };
+
+  // Enhanced validate transfer data with simplified validation
+  const validateTransferData = (transferData) => {
+    const { senderAccountId, recipientAccountId, amount, description } =
+      transferData;
+
+    const errors = [];
+
+    if (!senderAccountId) {
+      errors.push("Sender account is required");
+    }
+
+    if (!recipientAccountId) {
+      errors.push("Recipient account is required");
+    }
+
+    if (!amount || amount <= 0) {
+      errors.push("Valid transfer amount is required");
+    }
+
+    if (amount < 1) {
+      errors.push("Minimum transfer amount is ₹1");
+    }
+
+    if (senderAccountId === recipientAccountId) {
+      errors.push("Cannot transfer to the same account");
+    }
+
+    if (description && description.length > 200) {
+      errors.push("Description cannot exceed 200 characters");
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+    };
+  };
+
+  const canAccountTransfer = (account, amount) => {
+    if (!account) {
+      return { canTransfer: false, reason: "Account not found" };
+    }
+
+    if (account.status !== "Active") {
+      return { canTransfer: false, reason: "Account is not active" };
+    }
+
+    const fees = calculateTransferFees(amount);
+    const totalAmount = amount + fees;
+
+    // SIMPLIFIED: Only check if account has sufficient balance (no minimum balance requirement)
+    if (account.balance < totalAmount) {
+      return {
+        canTransfer: false,
+        reason: `Insufficient balance. Available: ₹${account.balance}, Required: ₹${totalAmount} (including ₹${fees} fees)`,
+      };
+    }
+
+    // Check daily transaction limits if available
+    if (
+      account.dailyTransactionLimit &&
+      account.dailyTransactionAmount + totalAmount >
+        account.dailyTransactionLimit
+    ) {
+      return {
+        canTransfer: false,
+        reason: `Daily transaction limit exceeded. Limit: ₹${
+          account.dailyTransactionLimit
+        }, Used: ₹${account.dailyTransactionAmount || 0}`,
+      };
+    }
+
+    // Check monthly transaction limits if available
+    if (
+      account.monthlyTransactionLimit &&
+      account.monthlyTransactionAmount + totalAmount >
+        account.monthlyTransactionLimit
+    ) {
+      return {
+        canTransfer: false,
+        reason: `Monthly transaction limit exceeded. Limit: ₹${
+          account.monthlyTransactionLimit
+        }, Used: ₹${account.monthlyTransactionAmount || 0}`,
+      };
+    }
+
+    return { canTransfer: true, reason: null };
+  };
+
+  // Format currency for display
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+    }).format(amount);
+  };
+
+  // Get account type limits and features
+  const getAccountTypeLimits = (accountType) => {
+    if (accountTypes[accountType]) {
+      return accountTypes[accountType];
+    }
+
+    // Default values if accountTypes not loaded yet
+    const defaults = {
+      Savings: {
+        minimumBalance: 1000,
+        dailyTransactionLimit: 10000,
+        monthlyTransactionLimit: 50000,
+      },
+      Current: {
+        minimumBalance: 5000,
+        dailyTransactionLimit: 50000,
+        monthlyTransactionLimit: 200000,
+      },
+    };
+
+    return defaults[accountType] || {};
+  };
+
+  // Search and filter functions
+  const searchAccounts = (accountsList, searchTerm) => {
+    if (!searchTerm) return accountsList;
+
+    const term = searchTerm.toLowerCase();
+    return accountsList.filter(
+      (account) =>
+        account.accountNumber.toLowerCase().includes(term) ||
+        (account.clientName &&
+          account.clientName.toLowerCase().includes(term)) ||
+        (account.clientEmail &&
+          account.clientEmail.toLowerCase().includes(term))
+    );
+  };
+
+  const filterTransactionsByDateRange = (
+    transactionsList,
+    startDate,
+    endDate
+  ) => {
+    if (!startDate && !endDate) return transactionsList;
+
+    return transactionsList.filter((transaction) => {
+      const transactionDate = new Date(transaction.createdAt);
+      const start = startDate ? new Date(startDate) : null;
+      const end = endDate ? new Date(endDate) : null;
+
+      if (start && end) {
+        return transactionDate >= start && transactionDate <= end;
+      } else if (start) {
+        return transactionDate >= start;
+      } else if (end) {
+        return transactionDate <= end;
+      }
+
+      return true;
+    });
+  };
+
+  const filterTransactionsByAmount = (
+    transactionsList,
+    minAmount,
+    maxAmount
+  ) => {
+    if (!minAmount && !maxAmount) return transactionsList;
+
+    return transactionsList.filter((transaction) => {
+      const amount = transaction.amount;
+
+      if (minAmount && maxAmount) {
+        return amount >= minAmount && amount <= maxAmount;
+      } else if (minAmount) {
+        return amount >= minAmount;
+      } else if (maxAmount) {
+        return amount <= maxAmount;
+      }
+
+      return true;
+    });
+  };
+
+  // Account statistics
+  const getAccountStatistics = () => {
+    const stats = {
+      totalAccounts: accounts.length,
+      totalBalance: getTotalBalance(),
+      savingsAccounts: accounts.filter((acc) => acc.accountType === "Savings")
+        .length,
+      currentAccounts: accounts.filter((acc) => acc.accountType === "Current")
+        .length,
+      activeAccounts: accounts.filter((acc) => acc.status === "Active").length,
+      inactiveAccounts: accounts.filter((acc) => acc.status !== "Active")
+        .length,
+    };
+
+    return stats;
+  };
+
+  // Enhanced fund transfer workflow
+  const initiateTransfer = async (transferData) => {
+    try {
+      // First validate the transfer data
+      const validation = validateTransferData(transferData);
+      if (!validation.isValid) {
+        const errorMessage = validation.errors.join(", ");
+        setError(errorMessage);
+        toast.error(errorMessage);
+        return {
+          success: false,
+          message: errorMessage,
+        };
+      }
+
+      // Check if sender account can perform the transfer
+      const senderAccount = accounts.find(
+        (acc) => acc._id === transferData.senderAccountId
+      );
+
+      if (!senderAccount) {
+        const errorMessage = "Sender account not found";
+        setError(errorMessage);
+        toast.error(errorMessage);
+        return {
+          success: false,
+          message: errorMessage,
+        };
+      }
+
+      // Use the sender account type for fee calculation
+      const transferCheck = canAccountTransfer(
+        senderAccount,
+        transferData.amount
+      );
+
+      if (!transferCheck.canTransfer) {
+        setError(transferCheck.reason);
+        toast.error(transferCheck.reason);
+        return {
+          success: false,
+          message: transferCheck.reason,
+        };
+      }
+
+      // Create the transfer order
+      return await createTransferOrder(transferData);
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to initiate transfer";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    }
+  };
+
+  // Complete transfer with Razorpay verification
+  const completeTransfer = async (paymentData) => {
+    try {
+      const result = await verifyAndCompleteTransfer(paymentData);
+
+      if (result.success) {
+        // Refresh all relevant data after successful transfer
+        await Promise.all([getMyAccounts(), getTransactionHistory()]);
+      }
+
+      return result;
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to complete transfer";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    }
+  };
+
+  // Cancel pending transaction
+  const cancelTransaction = async (transactionId) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const { data } = await axios.put(
+        `${backendUrl}/api/transaction/cancel/${transactionId}`,
+        {},
+        {
+          headers: getAuthHeaders(),
+        }
+      );
+
+      if (data.success) {
+        // Refresh transaction history after cancellation
+        await getTransactionHistory();
+
+        toast.success(data.message || "Transaction cancelled successfully");
+        return {
+          success: true,
+          message: data.message,
+        };
+      } else {
+        throw new Error(data.message || "Failed to cancel transaction");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to cancel transaction";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Account management helpers
+  const refreshAccountData = async () => {
+    try {
+      setLoading(true);
+      await Promise.all([getMyAccounts(), getAccountTypes()]);
+    } catch (error) {
+      console.error("Error refreshing account data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const refreshTransactionData = async (params = {}) => {
+    try {
+      setLoading(true);
+      await getTransactionHistory(params);
+    } catch (error) {
+      console.error("Error refreshing transaction data:", error);
     } finally {
       setLoading(false);
     }
@@ -558,83 +1419,316 @@ const AppContextProvider = (props) => {
 
   // Legacy methods for backward compatibility
   const getUserAccounts = getMyAccounts;
-
-  const getUserTransactions = useCallback(async (params = {}) => {
-    if (!token) return;
-
-    try {
-      setLoading(true);
-      const queryParams = new URLSearchParams({
-        page: params.page || 1,
-        limit: params.limit || 20,
-        ...params
-      });
-
-      // Placeholder for future transaction fetching API
-      const { data } = await axios.get(`${backendUrl}/api/client/transactions?${queryParams}`, {
-        headers: getAuthHeaders(),
-      });
-
-      if (data.success) {
-        setTransactions(data.transactions);
-        return data;
-      }
-    } catch (error) {
-      console.error('Error fetching transactions:', error);
-      toast.error(error.response?.data?.message || 'Failed to fetch transactions');
-    } finally {
-      setLoading(false);
-    }
-  }, [token, backendUrl]);
+  const getUserTransactions = getTransactionHistory;
 
   const getUserBalance = useCallback(async () => {
     if (!token) return;
 
     try {
-      // Placeholder for future balance fetching API
-      const { data } = await axios.get(`${backendUrl}/api/client/balance`, {
-        headers: getAuthHeaders(),
-      });
-
-      if (data.success) {
-        setBalance(data.balance);
-        return data.balance;
+      // Calculate total balance from all accounts
+      const accountsResult = await getMyAccounts();
+      if (accountsResult.success) {
+        const totalBalance = accountsResult.accounts.reduce(
+          (total, account) => total + (account.balance || 0),
+          0
+        );
+        setBalance(totalBalance);
+        return totalBalance;
       }
     } catch (error) {
-      console.error('Error fetching balance:', error);
-      toast.error(error.response?.data?.message || 'Failed to fetch balance');
+      console.error("Error fetching balance:", error);
+      toast.error("Failed to fetch balance");
     }
-  }, [token, backendUrl]);
+  }, [token, getMyAccounts]);
 
   // Utility methods
   const getAccountByNumber = (accountNumber) => {
-    return accounts.find(account => account.accountNumber === accountNumber);
+    return accounts.find((account) => account.accountNumber === accountNumber);
   };
 
-  const getAccountsByType = (accountType) => {
-    return accounts.filter(account => account.accountType === accountType);
+  const getAccountsByTypeLocal = (accountType) => {
+    return accounts.filter((account) => account.accountType === accountType);
   };
 
   const getTotalBalance = () => {
-    return accounts.reduce((total, account) => total + (account.balance || 0), 0);
+    return accounts.reduce(
+      (total, account) => total + (account.balance || 0),
+      0
+    );
   };
 
   const canCreateAccountType = (accountType) => {
     const existingAccount = accounts.find(
-      account => account.accountType === accountType && account.status !== 'Closed'
+      (account) =>
+        account.accountType === accountType && account.status !== "Closed"
     );
     return !existingAccount;
   };
 
-  // Check authentication on app load
+  const getAccountSummary = (accountId) => {
+    const account = accounts.find((acc) => acc._id === accountId);
+    if (!account) return null;
+
+    const accountTransactions = transactions.filter(
+      (t) =>
+        (t.senderAccountId === accountId ||
+          t.recipientAccountId === accountId) &&
+        t.status === "Completed" // Only count completed transactions
+    );
+
+    const sentTransactions = accountTransactions.filter(
+      (t) => t.type === "sent"
+    );
+    const receivedTransactions = accountTransactions.filter(
+      (t) => t.type === "received"
+    );
+
+    return {
+      account,
+      totalTransactions: accountTransactions.length,
+      sentCount: sentTransactions.length,
+      receivedCount: receivedTransactions.length,
+      totalSent: sentTransactions.reduce((sum, t) => sum + (t.amount || 0), 0),
+      totalReceived: receivedTransactions.reduce(
+        (sum, t) => sum + (t.amount || 0),
+        0
+      ),
+      totalFeesPaid: sentTransactions.reduce(
+        (sum, t) => sum + (t.fees || 0),
+        0
+      ),
+      lastTransaction:
+        accountTransactions.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        )[0] || null,
+      // Calculate available balance (current balance)
+      availableBalance: account.balance,
+      // Account utilization percentage (for display purposes)
+      utilizationPercentage:
+        account.monthlyTransactionLimit > 0
+          ? (
+              ((account.monthlyTransactionAmount || 0) /
+                account.monthlyTransactionLimit) *
+              100
+            ).toFixed(2)
+          : 0,
+    };
+  };
+
+  // Enhanced transaction statistics with fee calculations
+  const getTransactionStatistics = (timeframe = "all") => {
+    let filteredTransactions = [...transactions];
+
+    if (timeframe !== "all") {
+      const now = new Date();
+      let startDate;
+
+      switch (timeframe) {
+        case "today":
+          startDate = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate()
+          );
+          break;
+        case "week":
+          startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+          break;
+        case "month":
+          startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+          break;
+        case "year":
+          startDate = new Date(now.getFullYear(), 0, 1);
+          break;
+        default:
+          startDate = null;
+      }
+
+      if (startDate) {
+        filteredTransactions = transactions.filter(
+          (t) => new Date(t.createdAt) >= startDate
+        );
+      }
+    }
+
+    const sentTransactions = filteredTransactions.filter(
+      (t) => t.type === "sent" && t.status === "Completed"
+    );
+    const receivedTransactions = filteredTransactions.filter(
+      (t) => t.type === "received" && t.status === "Completed"
+    );
+    const completedTransactions = filteredTransactions.filter(
+      (t) => t.status === "Completed"
+    );
+    const failedTransactions = filteredTransactions.filter(
+      (t) => t.status === "Failed"
+    );
+    const pendingTransactions = filteredTransactions.filter(
+      (t) => t.status === "Pending"
+    );
+
+    return {
+      total: filteredTransactions.length,
+      sent: sentTransactions.length,
+      received: receivedTransactions.length,
+      completed: completedTransactions.length,
+      failed: failedTransactions.length,
+      pending: pendingTransactions.length,
+      totalSentAmount: sentTransactions.reduce(
+        (sum, t) => sum + (t.amount || 0),
+        0
+      ),
+      totalReceivedAmount: receivedTransactions.reduce(
+        (sum, t) => sum + (t.amount || 0),
+        0
+      ),
+      totalFeesPaid: sentTransactions.reduce(
+        (sum, t) => sum + (t.fees || 0),
+        0
+      ),
+      // Net transfer amount (received - sent)
+      netAmount:
+        receivedTransactions.reduce((sum, t) => sum + (t.amount || 0), 0) -
+        sentTransactions.reduce((sum, t) => sum + (t.amount || 0), 0),
+      // Success rate
+      successRate:
+        filteredTransactions.length > 0
+          ? (
+              (completedTransactions.length / filteredTransactions.length) *
+              100
+            ).toFixed(2)
+          : 0,
+    };
+  };
+
+  const getMonthlyTransactionSummary = () => {
+    const now = new Date();
+    const currentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const monthlyTransactions = transactions.filter(
+      (t) => new Date(t.createdAt) >= currentMonth
+    );
+
+    const dailyData = {};
+
+    monthlyTransactions.forEach((t) => {
+      const day = new Date(t.createdAt).getDate();
+      if (!dailyData[day]) {
+        dailyData[day] = { sent: 0, received: 0, count: 0 };
+      }
+
+      if (t.type === "sent") {
+        dailyData[day].sent += t.amount;
+      } else {
+        dailyData[day].received += t.amount;
+      }
+      dailyData[day].count += 1;
+    });
+
+    return dailyData;
+  };
+
+  const initiateFundTransfer = async (transferData) => {
+    try {
+      // First validate the transfer data
+      const validation = validateTransferData(transferData);
+      if (!validation.isValid) {
+        const errorMessage = validation.errors.join(", ");
+        setError(errorMessage);
+        toast.error(errorMessage);
+        return {
+          success: false,
+          message: errorMessage,
+        };
+      }
+
+      // Check if sender account can perform the transfer
+      const senderAccount = accounts.find(
+        (acc) => acc._id === transferData.senderAccountId
+      );
+
+      if (!senderAccount) {
+        const errorMessage = "Sender account not found";
+        setError(errorMessage);
+        toast.error(errorMessage);
+        return {
+          success: false,
+          message: errorMessage,
+        };
+      }
+
+      // Use the sender account type for fee calculation
+      const transferCheck = canAccountTransfer(
+        senderAccount,
+        transferData.amount
+      );
+
+      if (!transferCheck.canTransfer) {
+        setError(transferCheck.reason);
+        toast.error(transferCheck.reason);
+        return {
+          success: false,
+          message: transferCheck.reason,
+        };
+      }
+
+      // Create the transfer order
+      return await createTransferOrder(transferData);
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to initiate transfer";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    }
+  };
+
+  // Complete fund transfer after payment
+  const completeFundTransfer = async (paymentData) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const result = await verifyAndCompleteTransfer(paymentData);
+
+      if (result.success) {
+        // Refresh all relevant data after successful transfer
+        await Promise.all([getMyAccounts(), getTransactionHistory()]);
+      }
+
+      return result;
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to complete transfer";
+      setError(errorMessage);
+      toast.error(errorMessage);
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Check authentication on app load and fetch initial data
   useEffect(() => {
     if (token) {
       loadUserProfileData();
+      getMyAccounts();
+      getAccountTypes();
     } else {
       setUserData(false);
       setIsAuthenticated(false);
     }
-  }, [token]);
+  }, [token, getMyAccounts, getAccountTypes]);
 
   // Context value
   const contextValue = {
@@ -676,21 +1770,61 @@ const AppContextProvider = (props) => {
     getAccountTypes,
     closeAccount,
 
+    // Transaction management methods (matching backend APIs)
+    searchAccountById,
+    getAllActiveAccounts,
+    getAccountsByType, // For recipient accounts (transaction controller)
+    getMySenderAccounts,
+    getRecipientAccounts, // Enhanced recipient search (account controller)
+    createTransferOrder,
+    verifyAndCompleteTransfer,
+    getTransactionHistory,
+    getTransactionDetails,
+    cancelTransaction,
+
+    // Enhanced transfer workflow methods
+    initiateTransfer,
+    completeTransfer,
+    initiateFundTransfer,
+    completeFundTransfer,
+
+    // Utility functions
+    calculateTransferFees,
+    validateTransferData,
+    canAccountTransfer,
+    formatCurrency,
+    getAccountTypeLimits,
+
+    // Search and filter functions
+    searchAccounts,
+    filterTransactionsByDateRange,
+    filterTransactionsByAmount,
+
+    // Statistics functions
+    getAccountStatistics,
+    getTransactionStatistics,
+    getAccountSummary,
+    getMonthlyTransactionSummary,
+
+    // Data refresh functions
+    refreshAccountData,
+    refreshTransactionData,
+
     // Legacy methods for backward compatibility
     getUserAccounts,
     getUserTransactions,
     getUserBalance,
 
-    // Utility methods
+    // Local utility methods
     getAccountByNumber,
-    getAccountsByType,
+    getAccountsByType: getAccountsByTypeLocal, // Local filtering method
     getTotalBalance,
     canCreateAccountType,
 
     // State setters
     setError,
     setSelectedAccount,
-    setAccounts
+    setAccounts,
   };
 
   return (

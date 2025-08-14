@@ -31,7 +31,7 @@ const CreateAccountModal = ({ isOpen, onClose, onCreateAccount }) => {
       value: 'Savings',
       label: 'Savings Account',
       icon: PiggyBank,
-      description: 'Earn 3.5% interest, Min: ₹1,000',
+      description: 'Personal savings, Min: ₹1,000',
       color: 'text-emerald-600',
       minDeposit: 1000
     },

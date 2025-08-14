@@ -7,6 +7,7 @@ import connectCloudinary from "./Config/cloudinary.js";
 import adminRouter from "./routes/adminRoute.js";
 import clientrouter from "./routes/clientRoute.js";
 import accountRoute from "./routes/accountRoute.js";
+import transactionRoute from "./routes/transactionRoute.js";  // ADD THIS LINE
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -24,7 +25,9 @@ const startServer = async () => {
         // Routes
         app.use("/api/admin", adminRouter);
         app.use("/api/client", clientrouter);
-        app.use("/api/account",accountRoute);
+        app.use("/api/account", accountRoute);
+        app.use("/api/transaction", transactionRoute);  // ADD THIS LINE
+        
         app.get("/", (req, res) => {
             res.send("Welcome to the Banking System API");
         });

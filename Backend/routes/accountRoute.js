@@ -4,6 +4,9 @@ import {
     createAccount,
     getMyAccounts,
     getAccountDetails,
+    searchAccountById,
+    getAllActiveAccounts,
+    getRecipientAccounts, // Add this
     updateAccountStatus,
     getAccountTypes,
     closeAccount
@@ -18,6 +21,12 @@ accountRoute.get('/types', getAccountTypes);
 accountRoute.post('/create', authenticateToken, createAccount);
 accountRoute.get('/my-accounts', authenticateToken, getMyAccounts);
 accountRoute.get('/details/:accountNumber', authenticateToken, getAccountDetails);
+accountRoute.get('/search/:accountId', authenticateToken, searchAccountById);
+accountRoute.get('/all-active', authenticateToken, getAllActiveAccounts);
+
+// NEW: Route for getting recipient accounts by type for transfers
+accountRoute.get('/recipients/:accountType', authenticateToken, getRecipientAccounts);
+
 accountRoute.put('/status/:accountId', authenticateToken, updateAccountStatus);
 accountRoute.delete('/close/:accountId', authenticateToken, closeAccount);
 
