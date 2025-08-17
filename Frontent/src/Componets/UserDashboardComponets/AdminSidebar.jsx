@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { CiDollar } from "react-icons/ci";
 import { IoReceipt } from "react-icons/io5";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { FaMoneyBillWave } from "react-icons/fa";
 import { IoIosCard } from "react-icons/io";
+import { AppContext } from '../../Context/AppContext'; // Import the context
 import { 
   LayoutDashboard, 
   Users, 
@@ -26,10 +28,13 @@ import {
   CheckCircle,
   Clock,
   Menu,
-  X
+  X,
+  User
 } from 'lucide-react';
 
 const AdminSidebar = () => {
+  const { userData, backendUrl } = useContext(AppContext); // Get user data from context
+  
   const [expandedSections, setExpandedSections] = useState({
     dashboard: true // Dashboard expanded by default
   });
@@ -39,6 +44,7 @@ const AdminSidebar = () => {
   React.useEffect(() => {
     document.documentElement.style.setProperty('--sidebar-width', isCollapsed ? '64px' : '288px');
   }, [isCollapsed]);
+  
   const toggleSection = (sectionKey) => {
     if (!isCollapsed) {
       setExpandedSections(prev => ({
@@ -85,8 +91,8 @@ const AdminSidebar = () => {
       exact: true,
     },
     {
-      title: 'Connect Bank',
-      icon: IoIosCard,
+      title: 'Fix Deposit',
+      icon: FaMoneyBillWave,
       path: '/admin/connect-bank',
       exact: true,
     },
@@ -222,17 +228,31 @@ const AdminSidebar = () => {
       
       {/* Header Section */}
       <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
-        <div className={`${isCollapsed ? 'hidden' : 'block'}`}>
-          <h2 className="text-white font-semibold text-sm">Admin Panel</h2>
-          <p className="text-gray-400 text-xs mt-1">Banking Management System</p>
-        </div>
-        <button
-          onClick={toggleSidebar}
-          className="text-gray-400 hover:text-white transition-colors duration-200 p-1 rounded-md hover:bg-slate-800/50"
-          title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+        
+        
+        {/* Profile Section - Replacing the commented button */}
+        <NavLink 
+          className="flex items-center justify-center p-1 rounded-md hover:bg-slate-800/50 transition-colors duration-200 group"
+          title={isCollapsed ? `${userData?.name || 'Profile'}` : ''}
         >
-          {isCollapsed ? <Menu size={18} /> : <X size={18} />}
-        </button>
+          <div className="relative">
+            {userData?.image ? (
+              <img 
+                src={userData.image.startsWith('http') ? userData.image : `${backendUrl}/${userData.image}`}
+                alt={userData.name || 'Profile'}
+                className="rounded-full object-cover border-2 border-slate-600 group-hover:border-blue-400 transition-colors duration-200"
+              />
+            ) : (
+              <></>
+            )}
+            
+            {/* Online status indicator */}
+            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-slate-900"></div>
+          </div>
+          
+          {/* User info when expanded */}
+          
+        </NavLink>
       </div>
 
       {/* Scrollable Navigation */}

@@ -24,6 +24,7 @@ const Accounts = () => {
     getMyAccounts,
     getTotalBalance,
     currencySymbol,
+    // Remove sidebarOpen since MainContent handles the layout
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -58,15 +59,15 @@ const Accounts = () => {
   // Loading State
   if (loading && (!accounts || accounts.length === 0)) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-gray-900">
         <div className="flex items-center justify-center min-h-screen">
           <div className="text-center space-y-4">
             <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
             <div className="space-y-2">
-              <h3 className="text-xl font-semibold text-gray-900">
+              <h3 className="text-xl font-semibold text-gray-100">
                 Loading Your Accounts
               </h3>
-              <p className="text-gray-600 max-w-sm">
+              <p className="text-gray-400 max-w-sm">
                 Please wait while we fetch your banking information...
               </p>
             </div>
@@ -77,7 +78,8 @@ const Accounts = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <>
+      {/* No need for margin logic - MainContent handles it */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Empty State */}
         {!accounts || accounts.length === 0 ? (
@@ -89,40 +91,40 @@ const Accounts = () => {
               {/* Welcome Text */}
               <div className="flex-1">
                 <div className="space-y-3">
-                  <h1 className="text-3xl font-black text-cyan-50 leading-tight">
+                  <h1 className="text-3xl font-black text-white leading-tight">
                     My Bank account
                   </h1>
-                  <p className="text-lg font-semibold text-gray-700 max-w-2xl leading-relaxed">
+                  <p className="text-lg font-semibold text-gray-300 max-w-2xl leading-relaxed">
                     Manage your accounts and track your financial growth
                   </p>
                 </div>
               </div>
 
-              {/* Total Balance Card */}
+              {/* Total Balance Card - Uncomment if needed */}
               {/* <div className="lg:flex-shrink-0">
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 min-w-[320px]">
+                <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6 shadow-sm min-w-[320px]">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <Wallet size={18} className="text-blue-600" />
+                      <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                        <Wallet size={18} className="text-blue-400" />
                       </div>
-                      <span className="text-sm font-medium text-gray-700">Total Balance</span>
+                      <span className="text-sm font-medium text-gray-300">Total Balance</span>
                     </div>
                     <button
                       onClick={() => setShowTotalBalance(!showTotalBalance)}
-                      className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
+                      className="p-2 hover:bg-gray-700 rounded-lg transition-colors duration-200"
                       aria-label={showTotalBalance ? 'Hide balance' : 'Show balance'}
                     >
                       {showTotalBalance ? (
-                        <Eye size={16} className="text-gray-500" />
+                        <Eye size={16} className="text-gray-400" />
                       ) : (
-                        <EyeOff size={16} className="text-gray-500" />
+                        <EyeOff size={16} className="text-gray-400" />
                       )}
                     </button>
                   </div>
                   
                   <div className="space-y-3">
-                    <p className="text-3xl font-bold text-gray-900">
+                    <p className="text-3xl font-bold text-white">
                       {showTotalBalance 
                         ? `${currencySymbol}${totalBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` 
                         : '••••••'
@@ -130,11 +132,11 @@ const Accounts = () => {
                     </p>
                     
                     <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-1 px-2 py-1 bg-green-100 rounded-full">
-                        <TrendingUp size={12} className="text-green-600" />
-                        <span className="text-xs font-semibold text-green-700">+2.5%</span>
+                      <div className="flex items-center gap-1 px-2 py-1 bg-green-500/20 rounded-full">
+                        <TrendingUp size={12} className="text-green-400" />
+                        <span className="text-xs font-semibold text-green-400">+2.5%</span>
                       </div>
-                      <span className="text-sm text-gray-500">from last month</span>
+                      <span className="text-sm text-gray-400">from last month</span>
                     </div>
                   </div>
                 </div>
@@ -146,10 +148,10 @@ const Accounts = () => {
               {/* Section Header */}
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div className="space-y-1">
-                  <h2 className="text-2xl font-bold text-cyan-50">
+                  <h2 className="text-2xl font-bold text-white">
                     Your Accounts
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-gray-400">
                     {accounts.length} active account
                     {accounts.length !== 1 ? "s" : ""}
                   </p>
@@ -175,8 +177,6 @@ const Accounts = () => {
                 ))}
               </div>
             </div>
-
-            
           </div>
         )}
       </div>
@@ -189,8 +189,10 @@ const Accounts = () => {
       />
 
       {/* Error Toast */}
-      
-    </div>
+      {error && (
+        <></>
+      )}
+    </>
   );
 };
 

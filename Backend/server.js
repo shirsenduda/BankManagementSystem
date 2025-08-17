@@ -7,7 +7,8 @@ import connectCloudinary from "./Config/cloudinary.js";
 import adminRouter from "./routes/adminRoute.js";
 import clientrouter from "./routes/clientRoute.js";
 import accountRoute from "./routes/accountRoute.js";
-import transactionRoute from "./routes/transactionRoute.js";  // ADD THIS LINE
+import transactionRoute from "./routes/transactionRoute.js";
+import fdRoute from "./routes/fdRoute.js";  // ADD FIXED DEPOSIT ROUTE
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -26,10 +27,11 @@ const startServer = async () => {
         app.use("/api/admin", adminRouter);
         app.use("/api/client", clientrouter);
         app.use("/api/account", accountRoute);
-        app.use("/api/transaction", transactionRoute);  // ADD THIS LINE
+        app.use("/api/transaction", transactionRoute);
+        app.use("/api/fd", fdRoute);  // ADD FIXED DEPOSIT ROUTES
         
         app.get("/", (req, res) => {
-            res.send("Welcome to the Banking System API");
+            res.send("Welcome to the Banking System API - Now with Fixed Deposits!");
         });
 
         app.listen(PORT, () => console.log("Server is running on port", PORT));

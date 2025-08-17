@@ -48,7 +48,8 @@ const TransferFunds = () => {
     calculateTransferFees,
     formatCurrency,
     canAccountTransfer,
-    currencySymbol
+    currencySymbol,
+    sidebarOpen, // Add this to get sidebar state
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -291,10 +292,10 @@ const TransferFunds = () => {
   // Step 4: Payment Processing
   const renderStepFour = () => (
     <div className="space-y-8">
-      <div className="rounded-2xl p-6 border border-gray-600/30">
+      <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6">
         <div className="text-center space-y-6">
-          <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
-            <Clock size={32} className="text-blue-600" />
+          <div className="w-20 h-20 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto">
+            <Clock size={32} className="text-blue-400" />
           </div>
           
           <div>
@@ -302,7 +303,7 @@ const TransferFunds = () => {
             <p className="text-gray-300">Your transfer is being processed securely</p>
           </div>
 
-          <div className="rounded-xl p-6 border border-blue-600/30">
+          <div className="bg-gray-700/50 border border-blue-600/30 rounded-xl p-6">
             <div className="space-y-4">
               <div className="flex justify-between">
                 <span className="font-medium text-gray-300">Order ID</span>
@@ -349,11 +350,11 @@ const TransferFunds = () => {
 
   // Success Confirmation
   const renderConfirmation = () => (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="rounded-2xl p-8 border border-gray-600/30 max-w-md w-full mx-4">
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="bg-gray-800 border border-gray-700 rounded-2xl p-8 max-w-md w-full mx-4">
         <div className="text-center space-y-6">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-            <CheckCircle size={32} className="text-green-600" />
+          <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto">
+            <CheckCircle size={32} className="text-green-400" />
           </div>
           
           <div>
@@ -361,7 +362,7 @@ const TransferFunds = () => {
             <p className="text-gray-300">Your money has been transferred successfully</p>
           </div>
 
-          <div className="rounded-xl p-4 border border-green-600/30">
+          <div className="bg-gray-700/50 border border-green-600/30 rounded-xl p-4">
             <p className="text-lg font-bold text-green-400">{formatCurrency(parseFloat(amount))}</p>
             <p className="text-sm text-green-300">has been transferred successfully</p>
           </div>
@@ -396,49 +397,56 @@ const TransferFunds = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header Section */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-black text-white leading-tight">
-                Transfer Funds
-              </h1>
-              <p className="text-lg text-gray-300">
-                Send money securely between accounts
-              </p>
+    <div className="min-h-screen bg-gray-900">
+      {/* Main content with conditional margin based on sidebar state */}
+      <div 
+        className={`transition-all duration-300 ${
+          sidebarOpen ? 'ml-64' : 'ml-0'
+        }`}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Header Section */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <div className="space-y-2">
+                <h1 className="text-3xl font-black text-white leading-tight">
+                  Transfer Funds
+                </h1>
+                <p className="text-lg text-gray-300">
+                  Send money securely between accounts
+                </p>
+              </div>
+              
+              {/* Step Indicator */}
+              {!showConfirmation && (
+                <StepIndicator currentStep={step} />
+              )}
             </div>
-            
-            {/* Step Indicator */}
-            {!showConfirmation && (
-              <StepIndicator currentStep={step} />
-            )}
           </div>
-        </div>
 
-        {/* Error Display */}
-        {error && (
-          <div className="mb-6 border border-red-600/30 rounded-xl p-4">
-            <div className="flex items-center gap-2">
-              <AlertCircle size={20} className="text-red-400" />
-              <p className="text-red-400 font-semibold">Error</p>
+          {/* Error Display */}
+          {error && (
+            <div className="mb-6 bg-red-600/10 border border-red-600/30 rounded-xl p-4">
+              <div className="flex items-center gap-2">
+                <AlertCircle size={20} className="text-red-400" />
+                <p className="text-red-400 font-semibold">Error</p>
+              </div>
+              <p className="text-red-300 mt-1">{error}</p>
             </div>
-            <p className="text-red-300 mt-1">{error}</p>
-          </div>
-        )}
+          )}
 
-        {/* Main Content */}
-        <div className="space-y-8">
-          {renderCurrentStep()}
+          {/* Main Content */}
+          <div className="space-y-8">
+            {renderCurrentStep()}
+          </div>
+
+          {/* Transfer Tips (visible on step 1) */}
+          {step === 1 && (
+            <div className="mt-8">
+              <TransferTips />
+            </div>
+          )}
         </div>
-
-        {/* Transfer Tips (visible on step 1) */}
-        {step === 1 && (
-          <div className="mt-8">
-            <TransferTips />
-          </div>
-        )}
       </div>
     </div>
   );

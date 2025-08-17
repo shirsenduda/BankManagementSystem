@@ -26,11 +26,33 @@ const AppContextProvider = (props) => {
   const [accountTypes, setAccountTypes] = useState({});
   const [selectedAccount, setSelectedAccount] = useState(null);
 
+  // FD specific states
+  const [fixedDeposits, setFixedDeposits] = useState([]);
+  const [fdPlans, setFDPlans] = useState({});
+  const [selectedFD, setSelectedFD] = useState(null);
+  const [fdSummary, setFDSummary] = useState({});
+
   // Clear error function
   const clearError = () => setError(null);
 
   // Set auth token in headers
   const getAuthHeaders = () => {
+    return {
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
+    };
+  };
+
+  // Replace these functions (around lines 55-67):
+  const setLoadingState = (state) => {
+    setLoading(state);
+  };
+
+  const getLoadingState = () => {
+    return loading;
+  };
+
+  const getHeaders = () => {
     return {
       "Content-Type": "application/json",
       ...(token && { Authorization: `Bearer ${token}` }),
@@ -1157,14 +1179,6 @@ const AppContextProvider = (props) => {
     return { canTransfer: true, reason: null };
   };
 
-  // Format currency for display
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-    }).format(amount);
-  };
-
   // Get account type limits and features
   const getAccountTypeLimits = (accountType) => {
     if (accountTypes[accountType]) {
@@ -1718,6 +1732,484 @@ const AppContextProvider = (props) => {
     }
   };
 
+  // Create new Fixed Deposit
+  const createFixedDeposit = async (fdData) => {
+    try {
+      setLoadingState(true);
+      setError(null);
+
+      const { data } = await axios.post(`${backendUrl}/api/fd/create`, fdData, {
+        headers: getHeaders(),
+      });
+
+      if (data.success) {
+        // Refresh FD list after creation
+        await getMyFixedDeposits();
+
+        toast.success(data.message || "Fixed Deposit created successfully");
+        return {
+          success: true,
+          message: data.message,
+          fixedDeposit: data.fixedDeposit,
+        };
+      } else {
+        throw new Error(data.message || "Failed to create Fixed Deposit");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to create Fixed Deposit";
+      setError(errorMessage);
+      toast.error(errorMessage);
+
+      if (err.response?.status === 401 && logout) {
+        logout();
+      }
+
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoadingState(false);
+    }
+  };
+
+  // Get all FDs for the client
+  const getMyFixedDeposits = useCallback(async () => {
+    if (!token) return;
+
+    try {
+      setLoadingState(true);
+      setError(null);
+
+      const { data } = await axios.get(`${backendUrl}/api/fd/my-fds`, {
+        headers: getHeaders(),
+      });
+
+      if (data.success) {
+        setFixedDeposits(data.fixedDeposits);
+        setFDSummary(data.summary);
+        return {
+          success: true,
+          fixedDeposits: data.fixedDeposits,
+          summary: data.summary,
+        };
+      } else {
+        throw new Error(data.message || "Failed to fetch Fixed Deposits");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to fetch Fixed Deposits";
+      setError(errorMessage);
+
+      if (err.response?.status === 401 && logout) {
+        logout();
+      } else if (err.response?.status !== 401) {
+        toast.error(errorMessage);
+      }
+
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoadingState(false);
+    }
+  }, [token, backendUrl]);
+
+  // Get detailed FD information
+  const getFixedDepositDetails = async (fdId) => {
+    try {
+      setLoadingState(true);
+      setError(null);
+
+      const { data } = await axios.get(`${backendUrl}/api/fd/details/${fdId}`, {
+        headers: getHeaders(),
+      });
+
+      if (data.success) {
+        setSelectedFD(data.fixedDeposit);
+        return {
+          success: true,
+          fixedDeposit: data.fixedDeposit,
+        };
+      } else {
+        throw new Error(data.message || "Failed to fetch FD details");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to fetch FD details";
+      setError(errorMessage);
+      toast.error(errorMessage);
+
+      if (err.response?.status === 401 && logout) {
+        logout();
+      }
+
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoadingState(false);
+    }
+  };
+
+  // Close Fixed Deposit (Premature or at maturity)
+  const closeFixedDeposit = async (fdId, targetAccountId) => {
+    try {
+      setLoadingState(true);
+      setError(null);
+
+      const { data } = await axios.post(
+        `${backendUrl}/api/fd/close/${fdId}`,
+        { targetAccountId },
+        {
+          headers: getHeaders(),
+        }
+      );
+
+      if (data.success) {
+        // Refresh FD list after closure
+        await getMyFixedDeposits();
+
+        toast.success(data.message || "Fixed Deposit closed successfully");
+        return {
+          success: true,
+          message: data.message,
+          closure: data.closure,
+        };
+      } else {
+        throw new Error(data.message || "Failed to close Fixed Deposit");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to close Fixed Deposit";
+      setError(errorMessage);
+      toast.error(errorMessage);
+
+      if (err.response?.status === 401 && logout) {
+        logout();
+      }
+
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoadingState(false);
+    }
+  };
+
+  // Get FD plans and rates (Public endpoint)
+  const getFDPlans = useCallback(async () => {
+    try {
+      setLoadingState(true);
+      setError(null);
+
+      const { data } = await axios.get(`${backendUrl}/api/fd/plans`);
+
+      if (data.success) {
+        setFDPlans(data.plans);
+        return {
+          success: true,
+          plans: data.plans,
+          features: data.features,
+        };
+      } else {
+        throw new Error(data.message || "Failed to fetch FD plans");
+      }
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        "Failed to fetch FD plans";
+      setError(errorMessage);
+      toast.error(errorMessage);
+
+      return {
+        success: false,
+        message: errorMessage,
+      };
+    } finally {
+      setLoadingState(false);
+    }
+  }, [backendUrl]);
+
+  // Utility Functions
+
+  // Calculate maturity amount for a given principal and term
+  const calculateMaturityAmount = (
+    principalAmount,
+    termInMonths,
+    interestRate = null
+  ) => {
+    try {
+      const plans = fdPlans || {};
+      const selectedPlan = plans[termInMonths.toString()];
+      const rate =
+        interestRate || (selectedPlan ? selectedPlan.interestRate : 6.0);
+      const monthlyIncrement = selectedPlan
+        ? selectedPlan.monthlyIncrement
+        : 500;
+
+      const totalIncrements = termInMonths * monthlyIncrement;
+      const avgPrincipal = principalAmount + totalIncrements / 2;
+      const years = termInMonths / 12;
+      const interest = (avgPrincipal * rate * years) / 100;
+
+      return principalAmount + totalIncrements + interest;
+    } catch (error) {
+      console.error("Maturity calculation error:", error);
+      return principalAmount; // Return at least the principal
+    }
+  };
+
+  // Calculate current value of FD
+  const calculateCurrentValue = (fd) => {
+    try {
+      if (!fd) return 0;
+
+      const now = new Date();
+      const start = new Date(fd.startDate);
+
+      let monthsElapsed = (now.getFullYear() - start.getFullYear()) * 12;
+      monthsElapsed += now.getMonth() - start.getMonth();
+      monthsElapsed = Math.max(0, monthsElapsed);
+
+      const totalIncrements = monthsElapsed * (fd.monthlyIncrement || 500);
+      const avgPrincipal = fd.principalAmount + totalIncrements / 2;
+      const yearsFraction = monthsElapsed / 12;
+      const interest = (avgPrincipal * fd.interestRate * yearsFraction) / 100;
+
+      return fd.principalAmount + totalIncrements + interest;
+    } catch (error) {
+      console.error("Current value calculation error:", error);
+      return fd?.principalAmount || 0;
+    }
+  };
+
+  // Calculate premature penalty
+  const calculatePrematurePenalty = (fd) => {
+    try {
+      if (!fd) return 0;
+
+      const maturityDate = new Date(fd.maturityDate);
+      const now = new Date();
+
+      if (now >= maturityDate) return 0; // No penalty if mature
+
+      const currentValue = calculateCurrentValue(fd);
+      return (currentValue * (fd.penaltyRate || 1.0)) / 100;
+    } catch (error) {
+      console.error("Penalty calculation error:", error);
+      return 0;
+    }
+  };
+
+  // Check if FD is mature
+  const isFDMature = (fd) => {
+    try {
+      if (!fd || !fd.maturityDate) return false;
+      return new Date() >= new Date(fd.maturityDate);
+    } catch (error) {
+      console.error("Maturity check error:", error);
+      return false;
+    }
+  };
+
+  // Get months elapsed since FD start
+  const getMonthsElapsed = (fd) => {
+    try {
+      if (!fd || !fd.startDate) return 0;
+
+      const now = new Date();
+      const start = new Date(fd.startDate);
+
+      let months = (now.getFullYear() - start.getFullYear()) * 12;
+      months += now.getMonth() - start.getMonth();
+
+      return Math.max(0, months);
+    } catch (error) {
+      console.error("Months elapsed calculation error:", error);
+      return 0;
+    }
+  };
+
+  // Get months remaining until maturity
+  const getMonthsRemaining = (fd) => {
+    try {
+      if (!fd) return 0;
+      const elapsed = getMonthsElapsed(fd);
+      return Math.max(0, fd.termInMonths - elapsed);
+    } catch (error) {
+      console.error("Months remaining calculation error:", error);
+      return 0;
+    }
+  };
+
+  // Validate FD creation data
+  const validateFDData = (fdData) => {
+    const { sourceAccountId, principalAmount, termInMonths } = fdData;
+    const errors = [];
+
+    if (!sourceAccountId) {
+      errors.push("Source account is required");
+    }
+
+    if (!principalAmount || principalAmount < 10000) {
+      errors.push("Minimum FD amount is ₹10,000");
+    }
+
+    if (!termInMonths || ![12, 24, 36, 60].includes(parseInt(termInMonths))) {
+      errors.push("Invalid term. Must be 12, 24, 36, or 60 months");
+    }
+
+    if (principalAmount > 10000000) {
+      // 1 crore limit
+      errors.push("Maximum FD amount is ₹1,00,00,000");
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+    };
+  };
+
+  // Filter FDs by status
+  const filterFDsByStatus = (status) => {
+    return fixedDeposits.filter((fd) => fd.status === status);
+  };
+
+  // Filter mature FDs
+  const getMatureFDs = () => {
+    return fixedDeposits.filter((fd) => isFDMature(fd));
+  };
+
+  // Filter active FDs
+  const getActiveFDs = () => {
+    return fixedDeposits.filter((fd) => fd.status === "Active");
+  };
+
+  // Get FD statistics
+  const getFDStatistics = () => {
+    const activeFDs = getActiveFDs();
+    const matureFDs = getMatureFDs();
+
+    return {
+      totalFDs: fixedDeposits.length,
+      activeFDs: activeFDs.length,
+      matureFDs: matureFDs.length,
+      totalInvested: fixedDeposits.reduce(
+        (sum, fd) => sum + fd.principalAmount,
+        0
+      ),
+      currentTotalValue: fixedDeposits.reduce(
+        (sum, fd) => sum + calculateCurrentValue(fd),
+        0
+      ),
+      totalInterestEarned: fixedDeposits.reduce((sum, fd) => {
+        const currentValue = calculateCurrentValue(fd);
+        const monthsElapsed = getMonthsElapsed(fd);
+        const incrementsAdded = monthsElapsed * (fd.monthlyIncrement || 500);
+        return sum + (currentValue - fd.principalAmount - incrementsAdded);
+      }, 0),
+      avgInterestRate:
+        fixedDeposits.length > 0
+          ? fixedDeposits.reduce((sum, fd) => sum + fd.interestRate, 0) /
+            fixedDeposits.length
+          : 0,
+    };
+  };
+
+  // Get FD by ID
+  const getFDById = (fdId) => {
+    return fixedDeposits.find((fd) => fd._id === fdId);
+  };
+
+  // Get FDs by term
+  const getFDsByTerm = (termInMonths) => {
+    return fixedDeposits.filter((fd) => fd.termInMonths === termInMonths);
+  };
+
+  // Format currency for display
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+    }).format(amount || 0);
+  };
+
+  // Get plan details by term
+  const getPlanByTerm = (termInMonths) => {
+    return fdPlans[termInMonths.toString()] || null;
+  };
+
+  // Refresh FD data
+  const refreshFDData = async () => {
+    try {
+      setLoadingState(true);
+      await Promise.all([getMyFixedDeposits(), getFDPlans()]);
+    } catch (error) {
+      console.error("Error refreshing FD data:", error);
+    } finally {
+      setLoadingState(false);
+    }
+  };
+
+  // Get upcoming maturities (FDs maturing in next 30 days)
+  const getUpcomingMaturities = () => {
+    const now = new Date();
+    const next30Days = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+    return fixedDeposits.filter((fd) => {
+      const maturityDate = new Date(fd.maturityDate);
+      return (
+        maturityDate >= now &&
+        maturityDate <= next30Days &&
+        fd.status === "Active"
+      );
+    });
+  };
+
+  // Get monthly growth projection
+  const getMonthlyGrowthProjection = (fd) => {
+    try {
+      if (!fd) return [];
+
+      const projection = [];
+      const monthlyIncrement = fd.monthlyIncrement || 500;
+
+      for (let month = 0; month <= fd.termInMonths; month++) {
+        const totalIncrements = month * monthlyIncrement;
+        const avgPrincipal = fd.principalAmount + totalIncrements / 2;
+        const yearsFraction = month / 12;
+        const interest = (avgPrincipal * fd.interestRate * yearsFraction) / 100;
+
+        projection.push({
+          month,
+          principalAmount: fd.principalAmount,
+          incrementsAdded: totalIncrements,
+          interestEarned: interest,
+          totalValue: fd.principalAmount + totalIncrements + interest,
+        });
+      }
+
+      return projection;
+    } catch (error) {
+      console.error("Growth projection error:", error);
+      return [];
+    }
+  };
+
   // Check authentication on app load and fetch initial data
   useEffect(() => {
     if (token) {
@@ -1820,6 +2312,43 @@ const AppContextProvider = (props) => {
     getAccountsByType: getAccountsByTypeLocal, // Local filtering method
     getTotalBalance,
     canCreateAccountType,
+
+    // States
+    fixedDeposits,
+    fdPlans,
+    selectedFD,
+    fdSummary,
+    loading: getLoadingState(),
+
+    // Core FD operations
+    createFixedDeposit,
+    getMyFixedDeposits,
+    getFixedDepositDetails,
+    closeFixedDeposit,
+    getFDPlans,
+    getHeaders,
+
+    // Utility functions
+    calculateMaturityAmount,
+    calculateCurrentValue,
+    calculatePrematurePenalty,
+    isFDMature,
+    getMonthsElapsed,
+    getMonthsRemaining,
+    validateFDData,
+
+    // Filter and search functions
+    filterFDsByStatus,
+    getMatureFDs,
+    getActiveFDs,
+    getFDById,
+    getFDsByTerm,
+    getPlanByTerm,
+
+    // Statistics and analytics
+    getFDStatistics,
+    getUpcomingMaturities,
+    getMonthlyGrowthProjection,
 
     // State setters
     setError,
