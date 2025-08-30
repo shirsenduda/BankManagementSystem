@@ -8,7 +8,7 @@ const AppContextProvider = (props) => {
   // Banking App Context states
   const currencySymbol = "$";
   const backendUrl =
-    import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+    import.meta.env.VITE_BACKEND_URL || "https://bankmanagementsystem-backend.onrender.com";
 
   // Authentication states
   const [token, setToken] = useState(localStorage.getItem("token") || "");
