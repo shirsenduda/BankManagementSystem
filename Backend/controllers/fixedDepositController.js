@@ -1,4 +1,4 @@
-import FixedDepositModel from "../models/fixedDepositModel.js";
+import FixedDepositModel from "../models/FixedDepositModel.js";
 import accountModel from "../models/accountModel.js";
 import clientModel from "../models/clientModel.js";
 import mongoose from "mongoose";
