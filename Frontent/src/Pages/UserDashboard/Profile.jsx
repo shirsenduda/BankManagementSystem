@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef } from 'react';
-import { AppContext } from '../../context/AppContext';
+import { AppContext } from '../../Context/AppContext';
 import { User, Edit3, Camera, Save, X, Lock, Mail, Phone, MapPin, Briefcase, DollarSign, Users, CreditCard, Shield, CheckCircle } from 'lucide-react';
 
 const Profile = () => {
