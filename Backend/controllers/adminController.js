@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import clientModel from '../models/clientModel.js';
 import accountModel from '../models/accountModel.js';
 import transactionModel from '../models/transactionModel.js';
-import FixedDepositModel from '../models/fixedDepositModel.js';
+import FixedDepositModel from '../models/FixedDepositModel.js';
 
 // Generate JWT Token for Admin
 const generateAdminToken = () => {
