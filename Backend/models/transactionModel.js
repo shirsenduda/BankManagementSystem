@@ -2,10 +2,9 @@ import mongoose from "mongoose";
 
 const transactionSchema = new mongoose.Schema(
   {
-    // Transaction Identification - NOT required, we'll set it manually
+    // Transaction Identification - REMOVED unique: true to prevent duplicate index warning
     transactionId: {
       type: String,
-      unique: true,
       // Remove required: true - we'll set it manually
     },
     
@@ -94,10 +93,9 @@ const transactionSchema = new mongoose.Schema(
       default: 0
     },
     
-    // Reference Number for tracking - NOT required, we'll set it manually
+    // Reference Number for tracking - REMOVED unique: true to prevent duplicate index warning
     referenceNumber: {
-      type: String,
-      unique: true
+      type: String
     },
     
     // Transaction completion date
@@ -137,14 +135,14 @@ transactionSchema.statics.generateUniqueIds = function() {
   };
 };
 
-// Index for better query performance
+// Add indexes manually to prevent duplicate warnings
 transactionSchema.index({ senderClientId: 1 });
 transactionSchema.index({ recipientClientId: 1 });
 transactionSchema.index({ status: 1 });
 transactionSchema.index({ transactionType: 1 });
 transactionSchema.index({ createdAt: -1 });
-transactionSchema.index({ transactionId: 1 });
-transactionSchema.index({ referenceNumber: 1 });
+transactionSchema.index({ transactionId: 1 }, { unique: true }); // Make this unique
+transactionSchema.index({ referenceNumber: 1 }, { unique: true }); // Make this unique
 transactionSchema.index({ razorpayOrderId: 1 });
 
 const transactionModel = mongoose.model("Transaction", transactionSchema);

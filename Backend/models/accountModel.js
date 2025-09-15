@@ -209,7 +209,7 @@ accountSchema.methods.updateTransactionLimits = function (amount) {
 accountSchema.index({ clientId: 1 });
 accountSchema.index({ status: 1 });
 // Add index for accountNumber since it's used for lookups
-accountSchema.index({ accountNumber: 1 });
+// accountSchema.index({ accountNumber: 1 });
 
 const accountModel = mongoose.model("Account", accountSchema);
 

@@ -2,10 +2,9 @@ import mongoose from "mongoose";
 
 const fixedDepositSchema = new mongoose.Schema(
   {
-    // FD Identification
+    // FD Identification - REMOVED unique: true to prevent duplicate index warning
     fdNumber: {
       type: String,
-      unique: true,
       // Auto-generated in pre-save hook
     },
 
@@ -163,8 +162,6 @@ fixedDepositSchema.pre("validate", function (next) {
   next();
 });
 
-// Remove the separate pre-save hook since we're doing everything in pre-validate
-
 // Method to calculate current FD value with monthly increments
 fixedDepositSchema.methods.calculateCurrentValue = function () {
   const now = new Date();
@@ -278,10 +275,10 @@ fixedDepositSchema.statics.getFDPlans = function () {
   };
 };
 
-// Indexes for better query performance
+// Add indexes manually to prevent duplicate warnings
 fixedDepositSchema.index({ clientId: 1 });
 fixedDepositSchema.index({ status: 1 });
-fixedDepositSchema.index({ fdNumber: 1 });
+fixedDepositSchema.index({ fdNumber: 1 }, { unique: true }); // Make this unique
 fixedDepositSchema.index({ maturityDate: 1 });
 
 const FixedDepositModel = mongoose.model("FixedDeposit", fixedDepositSchema);
