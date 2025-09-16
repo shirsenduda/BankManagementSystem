@@ -7,17 +7,27 @@ const AdminLayout = () => {
     <div className="min-h-screen bg-dark-900">      
       {/* Main Layout with Sidebar */}
       <div className="flex pt-16"> {/* pt-16 to account for fixed nav height */}
-        {/* Sidebar */}
+        {/* Sidebar - Only show on desktop */}
         <AdminSidebar />
         
-        {/* Main Content Area - Dynamic margin based on sidebar state */}
+        {/* Main Content Area - Responsive margin based on sidebar state */}
         <div className="flex-1 transition-all duration-300 ease-in-out min-h-[calc(100vh-4rem)]" style={{
-          marginLeft: 'var(--sidebar-width, 288px)'
+          // On mobile (below md), no margin. On desktop, use sidebar width
+          marginLeft: 'var(--sidebar-width, 0px)'
         }}>
+          {/* Add responsive styles */}
+          <style jsx>{`
+            @media (max-width: 768px) {
+              .flex-1 {
+                margin-left: 0 !important;
+              }
+            }
+          `}</style>
+          
           {/* Content Container */}
           <div className="bg-dark-900 min-h-full">
-            {/* Main Content with proper padding and background */}
-            <div className="p-6 bg-dark-900">
+            {/* Main Content with responsive padding */}
+            <div className="p-3 sm:p-6 bg-dark-900">
               <Outlet />
             </div>
             

@@ -2,6 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { Menu, X, User, LogOut, Shield, Home, ChevronDown } from "lucide-react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { AppContext } from "../../Context/AppContext";
+// Import admin menu icons
+import { CiDollar } from "react-icons/ci";
+import { IoReceipt } from "react-icons/io5";
+import { FaMoneyBillTransfer } from "react-icons/fa6";
+import { FaMoneyBillWave } from "react-icons/fa";
+import { 
+  LayoutDashboard, 
+  Users
+} from 'lucide-react';
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -47,6 +56,46 @@ const Nav = () => {
     { to: "/contact", label: "Contact" },
   ];
 
+  // Admin navigation items for mobile menu
+  const adminNavItems = [
+    {
+      title: 'Dashboard',
+      icon: LayoutDashboard,
+      path: '/admin',
+      exact: true,
+    },
+    {
+      title: 'Accounts',
+      icon: CiDollar,
+      path: '/admin/Accounts',
+      exact: true,
+    },
+    {
+      title: 'Transfer Funds',
+      icon: FaMoneyBillTransfer,
+      path: '/admin/transfer',
+      exact: true,
+    },
+    {
+      title: 'Transactions History',
+      icon: IoReceipt,
+      path: '/admin/transactions',
+      exact: true,
+    },
+    {
+      title: 'Fix Deposit',
+      icon: FaMoneyBillWave,
+      path: '/admin/connect-bank',
+      exact: true,
+    },
+    {
+      title: 'Profile',
+      icon: Users,
+      path: '/admin/users',
+      exact: false,
+    },
+  ];
+
   // Enhanced Professional Logo Component
   const GreenBankLogo = ({ size = 36 }) => (
     <svg
@@ -65,7 +114,6 @@ const Nav = () => {
         </filter>
       </defs>
       
-      {/* Main logo shape */}
       <rect
         x="15"
         y="15"
@@ -76,14 +124,12 @@ const Nav = () => {
         filter="url(#shadow)"
       />
       
-      {/* Bank building design */}
       <rect x="25" y="35" width="50" height="3" fill="white" opacity="0.9" />
       <rect x="30" y="42" width="8" height="25" fill="white" opacity="0.8" />
       <rect x="42" y="42" width="8" height="25" fill="white" opacity="0.8" />
       <rect x="54" y="42" width="8" height="25" fill="white" opacity="0.8" />
       <rect x="25" y="67" width="50" height="5" fill="white" opacity="0.9" />
       
-      {/* Dollar sign */}
       <text x="50" y="58" fontSize="20" fontWeight="bold" fill="white" textAnchor="middle">$</text>
     </svg>
   );
@@ -300,26 +346,51 @@ const Nav = () => {
           {isMenuOpen && (
             <div className="md:hidden py-3">
               <div className="bg-slate-800/95 backdrop-blur-lg rounded-xl shadow-xl border border-slate-700/50 overflow-hidden">
-                {/* Mobile nav links */}
-                {!isAdminPath && (
+                
+                {/* Show admin nav items on admin pages */}
+                {isAdminPath && isAuthenticated ? (
                   <div className="py-2">
-                    {navLinks.map(({ to, label }, index) => (
+                    {adminNavItems.map(({ title, icon: Icon, path, exact }, index) => (
                       <NavLink
-                        key={to}
-                        to={to}
+                        key={index}
+                        to={path}
+                        end={exact}
                         onClick={() => setIsMenuOpen(false)}
                         className={({ isActive }) =>
-                          `block px-4 py-3 transition-all duration-200 ${
+                          `block px-4 py-3 transition-all duration-200 flex items-center space-x-3 ${
                             isActive
                               ? "text-blue-400 bg-blue-500/10 border-r-4 border-blue-500 font-semibold"
                               : "text-slate-300 hover:text-blue-400 hover:bg-slate-700/50"
                           } ${index > 0 ? 'border-t border-slate-700/50' : ''}`
                         }
                       >
-                        {label}
+                        <Icon size={18} />
+                        <span>{title}</span>
                       </NavLink>
                     ))}
                   </div>
+                ) : (
+                  /* Show regular nav items on non-admin pages */
+                  !isAdminPath && (
+                    <div className="py-2">
+                      {navLinks.map(({ to, label }, index) => (
+                        <NavLink
+                          key={to}
+                          to={to}
+                          onClick={() => setIsMenuOpen(false)}
+                          className={({ isActive }) =>
+                            `block px-4 py-3 transition-all duration-200 ${
+                              isActive
+                                ? "text-blue-400 bg-blue-500/10 border-r-4 border-blue-500 font-semibold"
+                                : "text-slate-300 hover:text-blue-400 hover:bg-slate-700/50"
+                            } ${index > 0 ? 'border-t border-slate-700/50' : ''}`
+                          }
+                        >
+                          {label}
+                        </NavLink>
+                      ))}
+                    </div>
+                  )
                 )}
 
                 {!isAuthenticated ? (

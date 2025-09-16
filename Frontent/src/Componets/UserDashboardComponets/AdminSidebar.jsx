@@ -5,7 +5,7 @@ import { IoReceipt } from "react-icons/io5";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { IoIosCard } from "react-icons/io";
-import { AppContext } from '../../Context/AppContext'; // Import the context
+import { AppContext } from '../../Context/AppContext';
 import { 
   LayoutDashboard, 
   Users, 
@@ -33,14 +33,13 @@ import {
 } from 'lucide-react';
 
 const AdminSidebar = () => {
-  const { userData, backendUrl } = useContext(AppContext); // Get user data from context
+  const { userData, backendUrl } = useContext(AppContext);
   
   const [expandedSections, setExpandedSections] = useState({
-    dashboard: true // Dashboard expanded by default
+    dashboard: true
   });
   const [isCollapsed, setIsCollapsed] = useState(true);
 
-  // Update CSS custom property when sidebar state changes
   React.useEffect(() => {
     document.documentElement.style.setProperty('--sidebar-width', isCollapsed ? '64px' : '288px');
   }, [isCollapsed]);
@@ -56,7 +55,6 @@ const AdminSidebar = () => {
 
   const toggleSidebar = () => {
     setIsCollapsed(prev => !prev);
-    // Close all expanded sections when collapsing
     if (!isCollapsed) {
       setExpandedSections({});
     } else {
@@ -64,7 +62,6 @@ const AdminSidebar = () => {
     }
   };
 
-  // Fixed sidebar navigation structure
   const sidebarItems = [
     {
       title: 'Dashboard',
@@ -137,7 +134,6 @@ const AdminSidebar = () => {
             )}
           </button>
           
-          {/* Submenu - only show when not collapsed */}
           {!isCollapsed && isExpanded && (
             <div className="ml-6 mt-1 space-y-0.5 border-l border-slate-700/50 pl-4">
               {item.children.map((child, childIndex) => (
@@ -208,8 +204,8 @@ const AdminSidebar = () => {
   };
 
   return (
-    <div className={`fixed left-0 top-16 h-[calc(100vh-4rem)] ${isCollapsed ? 'w-16' : 'w-72'} bg-slate-900 border-r border-slate-700/50 overflow-hidden flex flex-col transition-all duration-300 ease-in-out`}>
-      {/* Custom Scrollbar Styles */}
+    // Hide sidebar on mobile (md:block means show on medium screens and above)
+    <div className={`hidden md:block fixed left-0 top-16 h-[calc(100vh-4rem)] ${isCollapsed ? 'w-16' : 'w-72'} bg-slate-900 border-r border-slate-700/50 overflow-hidden flex-col transition-all duration-300 ease-in-out`}>
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 4px;
@@ -226,11 +222,7 @@ const AdminSidebar = () => {
         }
       `}</style>
       
-      {/* Header Section */}
       <div className="p-4 border-b border-slate-700/50 flex items-center justify-between">
-        
-        
-        {/* Profile Section - Replacing the commented button */}
         <NavLink 
           className="flex items-center justify-center p-1 rounded-md hover:bg-slate-800/50 transition-colors duration-200 group"
           title={isCollapsed ? `${userData?.name || 'Profile'}` : ''}
@@ -245,17 +237,11 @@ const AdminSidebar = () => {
             ) : (
               <></>
             )}
-            
-            {/* Online status indicator */}
             <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-slate-900"></div>
           </div>
-          
-          {/* User info when expanded */}
-          
         </NavLink>
       </div>
 
-      {/* Scrollable Navigation */}
       <div className="flex-1 overflow-y-auto custom-scrollbar" style={{
         scrollbarWidth: 'thin',
         scrollbarColor: '#475569 transparent'
@@ -265,7 +251,6 @@ const AdminSidebar = () => {
         </nav>
       </div>
 
-      {/* Footer */}
       <div className="p-4 border-t border-slate-700/50">
         <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'space-x-2'} text-xs text-gray-400`}>
           <div className="w-2 h-2 bg-green-400 rounded-full"></div>
