@@ -20,6 +20,30 @@ import TransferReview from '../../Componets/UserDashboardComponets/TransferRevie
 import QuickTransfer from '../../Componets/UserDashboardComponets/QuickTransfer';
 import TransferTips from '../../Componets/UserDashboardComponets/TransferTips';
 
+// Custom mobile responsiveness styles
+const mobileStyles = `
+@media (max-width: 768px) {
+  .transfer-header-flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  .transfer-card {
+    padding: 1rem !important;
+  }
+  .transfer-btns {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+  .step-indicator {
+    width: 100%;
+    justify-content: flex-start !important;
+    margin-top: 1rem;
+  }
+}
+`;
+
 const TransferFunds = () => {
   // Form states
   const [step, setStep] = useState(1); // 1: Select accounts, 2: Amount & details, 3: Review, 4: Payment
@@ -79,11 +103,9 @@ const TransferFunds = () => {
       if (accountResult.success) {
         setSearchResults([accountResult.account]);
       } else {
-        // Search in recipient accounts - you might need to implement this in your context
         setSearchResults([]);
       }
     } catch (err) {
-      console.error('Search error:', err);
       setSearchResults([]);
     } finally {
       setIsSearching(false);
@@ -152,7 +174,6 @@ const TransferFunds = () => {
   // Step 1: Select Accounts
   const renderStepOne = () => (
     <div className="space-y-8">
-      {/* Sender Account Selection */}
       <AccountSelector
         title="From Account"
         description="Select your source account"
@@ -164,8 +185,6 @@ const TransferFunds = () => {
         onSelectAccount={setSenderAccountId}
         showBalance={showBalance}
       />
-
-      {/* Recipient Account Selection */}
       <AccountSelector
         title="To Account"
         description="Search and select recipient"
@@ -184,10 +203,8 @@ const TransferFunds = () => {
           onSelectRecipient={setRecipientAccountId}
         />
       </AccountSelector>
-
-      {/* Continue Button */}
       {senderAccountId && recipientAccountId && (
-        <div className="flex justify-end">
+        <div className="flex justify-end transfer-btns">
           <button
             onClick={() => setStep(2)}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-200 shadow-sm hover:shadow-md"
@@ -203,14 +220,11 @@ const TransferFunds = () => {
   // Step 2: Amount and Details
   const renderStepTwo = () => (
     <div className="space-y-8">
-      {/* Selected Accounts Summary */}
       <TransferSummary
         senderAccount={senderAccount}
         recipientAccount={recipientAccount}
         formatCurrency={formatCurrency}
       />
-
-      {/* Amount Input */}
       <AmountInput
         amount={amount}
         onAmountChange={setAmount}
@@ -221,9 +235,7 @@ const TransferFunds = () => {
         formatCurrency={formatCurrency}
         currencySymbol={currencySymbol}
       />
-
-      {/* Navigation Buttons */}
-      <div className="flex justify-between">
+      <div className="flex justify-between transfer-btns">
         <button
           onClick={() => setStep(1)}
           className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-xl font-semibold transition-all duration-200"
@@ -258,9 +270,7 @@ const TransferFunds = () => {
           formatCurrency={formatCurrency}
           canTransfer={canTransfer}
         />
-
-        {/* Navigation Buttons */}
-        <div className="flex justify-between">
+        <div className="flex justify-between transfer-btns">
           <button
             onClick={() => setStep(2)}
             className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-xl font-semibold transition-all duration-200"
@@ -292,17 +302,15 @@ const TransferFunds = () => {
   // Step 4: Payment Processing
   const renderStepFour = () => (
     <div className="space-y-8">
-      <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6">
+      <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6 transfer-card">
         <div className="text-center space-y-6">
           <div className="w-20 h-20 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto">
             <Clock size={32} className="text-blue-400" />
           </div>
-          
           <div>
             <h3 className="text-xl font-bold text-white mb-2">Processing Transfer</h3>
             <p className="text-gray-300">Your transfer is being processed securely</p>
           </div>
-
           <div className="bg-gray-700/50 border border-blue-600/30 rounded-xl p-6">
             <div className="space-y-4">
               <div className="flex justify-between">
@@ -325,7 +333,6 @@ const TransferFunds = () => {
               </div>
             </div>
           </div>
-
           <button
             onClick={handleCompleteTransfer}
             disabled={loading}
@@ -351,22 +358,19 @@ const TransferFunds = () => {
   // Success Confirmation
   const renderConfirmation = () => (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-      <div className="bg-gray-800 border border-gray-700 rounded-2xl p-8 max-w-md w-full mx-4">
+      <div className="bg-gray-800 border border-gray-700 rounded-2xl p-8 max-w-md w-full mx-4 transfer-card">
         <div className="text-center space-y-6">
           <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto">
             <CheckCircle size={32} className="text-green-400" />
           </div>
-          
           <div>
             <h3 className="text-2xl font-bold text-white mb-2">Transfer Successful!</h3>
             <p className="text-gray-300">Your money has been transferred successfully</p>
           </div>
-
           <div className="bg-gray-700/50 border border-green-600/30 rounded-xl p-4">
             <p className="text-lg font-bold text-green-400">{formatCurrency(parseFloat(amount))}</p>
             <p className="text-sm text-green-300">has been transferred successfully</p>
           </div>
-
           <button
             onClick={resetForm}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition-all duration-200"
@@ -397,58 +401,57 @@ const TransferFunds = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      {/* Main content with conditional margin based on sidebar state */}
-      <div 
-        className={`transition-all duration-300 ${
-          sidebarOpen ? 'ml-64' : 'ml-0'
-        }`}
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Header Section */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-black text-white leading-tight">
-                  Transfer Funds
-                </h1>
-                <p className="text-lg text-gray-300">
-                  Send money securely between accounts
-                </p>
+    <>
+      <style>{mobileStyles}</style>
+      <div className="min-h-screen bg-gray-900">
+        {/* Main content with conditional margin based on sidebar state */}
+        <div 
+          className={`transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-0'}`}
+        >
+          <div className="max-w-6xl mx-auto px-4 sm:px-2 py-8">
+            {/* Header Section */}
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-6 transfer-header-flex">
+                <div className="space-y-2">
+                  <h1 className="text-3xl font-black text-white leading-tight">
+                    Transfer Funds
+                  </h1>
+                  <p className="text-lg text-gray-300">
+                    Send money securely between accounts
+                  </p>
+                </div>
+                {/* Step Indicator */}
+                {!showConfirmation && (
+                  <div className="step-indicator flex items-center justify-end">
+                    <StepIndicator currentStep={step} />
+                  </div>
+                )}
               </div>
-              
-              {/* Step Indicator */}
-              {!showConfirmation && (
-                <StepIndicator currentStep={step} />
-              )}
             </div>
-          </div>
-
-          {/* Error Display */}
-          {error && (
-            <div className="mb-6 bg-red-600/10 border border-red-600/30 rounded-xl p-4">
-              <div className="flex items-center gap-2">
-                <AlertCircle size={20} className="text-red-400" />
-                <p className="text-red-400 font-semibold">Error</p>
+            {/* Error Display */}
+            {error && (
+              <div className="mb-6 bg-red-600/10 border border-red-600/30 rounded-xl p-4">
+                <div className="flex items-center gap-2">
+                  <AlertCircle size={20} className="text-red-400" />
+                  <p className="text-red-400 font-semibold">Error</p>
+                </div>
+                <p className="text-red-300 mt-1">{error}</p>
               </div>
-              <p className="text-red-300 mt-1">{error}</p>
+            )}
+            {/* Main Content */}
+            <div className="space-y-8">
+              {renderCurrentStep()}
             </div>
-          )}
-
-          {/* Main Content */}
-          <div className="space-y-8">
-            {renderCurrentStep()}
+            {/* Transfer Tips (visible on step 1) */}
+            {step === 1 && (
+              <div className="mt-8">
+                <TransferTips />
+              </div>
+            )}
           </div>
-
-          {/* Transfer Tips (visible on step 1) */}
-          {step === 1 && (
-            <div className="mt-8">
-              <TransferTips />
-            </div>
-          )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
