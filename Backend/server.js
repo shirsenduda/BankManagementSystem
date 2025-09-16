@@ -78,7 +78,7 @@ const startServer = async () => {
     app.use(cors());
 
     // Routes
-    app.use("/api/admin", adminRouter);
+    // app.use("/api/admin", adminRouter);
     app.use("/api/client", clientrouter);
     app.use("/api/account", accountRoute);
     app.use("/api/transaction", transactionRoute);
