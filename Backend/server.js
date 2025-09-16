@@ -11,6 +11,7 @@ import transactionRoute from "./routes/transactionRoute.js";
 import fdRoute from "./routes/fdRoute.js";
 
 const app = express();
+const PORT = process.env.PORT || 4000;
 
 // Initialize connections once at startup
 let connectionInitialized = false;
@@ -63,7 +64,8 @@ app.use("/api/fd", fdRoute);
 app.get("/", (req, res) => {
     res.json({
         message: "Welcome to the Banking System API - Now with Fixed Deposits!",
-        database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected'
+        database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
+        port: PORT
     });
 });
 
@@ -73,5 +75,12 @@ process.on('SIGINT', async () => {
     await mongoose.connection.close();
     process.exit(0);
 });
+
+// Start server only when not in Vercel environment
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
+}
 
 export default app;
